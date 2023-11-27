@@ -49,3 +49,5 @@ func Register(name, email, password, number, role string) *User {
 		Role:     role,
 	}
 }
+
+//final entity user

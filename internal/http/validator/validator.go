@@ -28,7 +28,6 @@ func NewFormValidator() *FormValidator {
 	})
 	return &FormValidator{validate}
 }
-
 func ValidatorErrors(err error) map[string]string {
 	fields := map[string]string{}
 

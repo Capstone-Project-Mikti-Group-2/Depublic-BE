@@ -18,7 +18,6 @@ type UserUseCase interface {
 	FindUserByNumber(ctx context.Context, number string) (*entity.User, error)
 	FindUserByUsername(ctx context.Context, username string) (*entity.User, error)
 }
-
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *entity.User) error
 	UpdateUser(ctx context.Context, user *entity.User) error

@@ -9,3 +9,5 @@ type JwtCustomClaims struct {
 	Role  string `json:"role"`
 	jwt.RegisteredClaims
 }
+
+//role add

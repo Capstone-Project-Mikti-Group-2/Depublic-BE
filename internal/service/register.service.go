@@ -31,11 +31,12 @@ func (s *RegistrationService) Registration(ctx context.Context, user *entity.Use
 	if err != nil {
 		return errors.New("failed to hash password")
 	}
+
 	user.Password = string(hashedPassword)
 
-	err = s.repo.Registration(ctx, user)
-	if err != nil {
+	if err := s.repo.Registration(ctx, user); err != nil {
 		return err
 	}
+
 	return nil
 }

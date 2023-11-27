@@ -23,7 +23,6 @@ func NewTokenService(cfg *config.Config) *TokenService {
 		cfg: cfg,
 	}
 }
-
 func (s *TokenService) GenerateToken(ctx context.Context, user *entity.User) (string, error) {
 	expiredTime := time.Now().Local().Add(20 * time.Minute)
 	claims := common.JwtCustomClaims{

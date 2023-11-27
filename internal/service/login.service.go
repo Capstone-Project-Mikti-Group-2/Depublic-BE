@@ -27,16 +27,18 @@ func NewLoginService(repo LoginRepository) *LoginService {
 }
 
 func (s *LoginService) Login(ctx context.Context, email, password string) (*entity.User, error) {
+	// Find the user by email
 	user, err := s.repo.FindByEmail(ctx, email)
 	if err != nil {
 		return nil, err
 	}
 
-	// cek database untuk email
+	// Check if user exists
 	if user == nil {
 		return nil, errors.New("user with that email not found")
 	}
 
+	// Compare the hashed password with the provided password
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
 		return nil, errors.New("incorrect login credentials")

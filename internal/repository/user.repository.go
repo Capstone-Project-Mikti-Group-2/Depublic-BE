@@ -102,7 +102,7 @@ func (r *UserRepository) FindUserByUsername(ctx context.Context, username string
 	return user, nil
 }
 
-// Get User by Number (Find User by Number)
+// Get User by Number (Find User by Number Phone)
 func (r *UserRepository) FindUserByNumber(ctx context.Context, number string) (*entity.User, error) {
 	user := new(entity.User)
 	err := r.db.WithContext(ctx).Where("number = ?", number).First(user).Error

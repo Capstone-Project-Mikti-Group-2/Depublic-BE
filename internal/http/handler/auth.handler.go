@@ -92,3 +92,5 @@ func (h *AuthHandler) Registration(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, data)
 }
+
+//completed auth

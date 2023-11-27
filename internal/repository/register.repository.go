@@ -24,3 +24,5 @@ func (r *RegistrationRepository) Registration(ctx context.Context, user *entity.
 	}
 	return nil
 }
+
+//complete registeration

@@ -30,7 +30,6 @@ func NewServer(
 		middleware.Recover(),
 		middleware.CORS(),
 	)
-
 	//group API baru
 	v1 := e.Group("/api/v1")
 	for _, public := range publicRoutes {
