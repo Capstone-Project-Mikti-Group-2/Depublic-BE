@@ -8,7 +8,6 @@ import (
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/binder"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/router"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/labstack/echo-contrib/session"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -39,7 +38,7 @@ func NewServer(
 	}
 
 	for _, private := range privateRoutes {
-		v1.Add(private.Method, private.Path, private.Handler) //JWTProtected(cfg.JWT.SecretKey)
+		v1.Add(private.Method, private.Path, private.Handler, JWTProtected(cfg.JWT.SecretKey), RBACMiddleware(private.Roles...)) //JWTProtected(cfg.JWT.SecretKey)
 	}
 	e.GET("/ping", func(c echo.Context) error {
 		return c.String(200, "pong")
@@ -56,13 +55,33 @@ func JWTProtected(SecretKey string) echo.MiddlewareFunc {
 	})
 }
 
-func SessionProtected(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		sess, _ := session.Get("auth-sessions", ctx)
-		if sess.Values["token"] == nil {
-			return ctx.JSON(http.StatusUnauthorized, map[string]string{"error": "Unauthorized"})
+func RBACMiddleware(roles ...string) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			user, ok := c.Get("user").(*jwt.Token)
+			if !ok {
+				return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+					"message": "Silahkan login terlebih dahulu",
+				})
+			}
+			claims := user.Claims.(*common.JwtCustomClaims)
+
+			//cek apakah user mempunyai role yang diinginkan
+			if !contains(roles, claims.Role) {
+				return c.JSON(http.StatusForbidden, map[string]interface{}{
+					"message": "Anda tidak diizinkan untuk mengakses resource ini",
+				})
+			}
+			return next(c)
 		}
-		ctx.Set("user", sess.Values["token"])
-		return next(ctx)
 	}
+}
+
+func contains(slice []string, s string) bool {
+	for _, value := range slice {
+		if value == s {
+			return true
+		}
+	}
+	return false
 }

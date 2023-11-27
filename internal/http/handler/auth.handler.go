@@ -27,8 +27,8 @@ func NewAuthHandler(registrationService service.RegistrationUseCase, loginServic
 
 func (h *AuthHandler) Login(ctx echo.Context) error {
 	var input struct {
-		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required, min=8"`
+		Email    string `json:"email" validate:"email"`
+		Password string `json:"password" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -64,8 +64,8 @@ func (h *AuthHandler) Login(ctx echo.Context) error {
 func (h *AuthHandler) Registration(ctx echo.Context) error {
 	var input struct {
 		Name     string `json:"name" validate:"required"`
-		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required, min=8"`
+		Email    string `json:"email" validate:"email"`
+		Password string `json:"password" validate:"required"`
 		Number   string `json:"number" validate:"required"`
 	}
 
