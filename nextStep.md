@@ -1,0 +1,4 @@
+- making ticket entity
+- making ticket repository
+- making ticket service
+- making crud ticket handler
