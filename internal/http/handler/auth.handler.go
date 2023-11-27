@@ -6,8 +6,6 @@ import (
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
-	"github.com/gorilla/sessions"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
 
@@ -28,7 +26,7 @@ func NewAuthHandler(registrationService service.RegistrationUseCase, loginServic
 func (h *AuthHandler) Login(ctx echo.Context) error {
 	var input struct {
 		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required, min=8"`
+		Password string `json:"password" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -47,17 +45,6 @@ func (h *AuthHandler) Login(ctx echo.Context) error {
 	data := map[string]interface{}{
 		"token": accessToken,
 	}
-	sess, _ := session.Get("auth-sessions", ctx)
-	sess.Options = &sessions.Options{
-		Path:     "/",
-		MaxAge:   86400,
-		HttpOnly: true,
-	}
-	sess.Values["token"] = accessToken
-	err = sess.Save(ctx.Request(), ctx.Response())
-	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, err)
-	}
 	return ctx.JSON(http.StatusOK, data)
 }
 
@@ -65,7 +52,7 @@ func (h *AuthHandler) Registration(ctx echo.Context) error {
 	var input struct {
 		Name     string `json:"name" validate:"required"`
 		Email    string `json:"email" validate:"required,email"`
-		Password string `json:"password" validate:"required, min=8"`
+		Password string `json:"password" validate:"required"`
 		Number   string `json:"number" validate:"required"`
 	}
 

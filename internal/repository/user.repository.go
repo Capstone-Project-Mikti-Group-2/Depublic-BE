@@ -11,11 +11,6 @@ type UserRepository struct {
 	db *gorm.DB
 }
 
-// FindByEmail implements service.LoginRepository.
-func (*UserRepository) FindByEmail(ctx context.Context, email string) (*entity.User, error) {
-	panic("unimplemented")
-}
-
 func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{
 		db: db,
