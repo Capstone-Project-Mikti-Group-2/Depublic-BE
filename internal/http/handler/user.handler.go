@@ -26,50 +26,50 @@ func NewUserHandler(
 func (h *UserHandler) CreateUser(ctx echo.Context) error {
 	var input struct {
 		Name     string `json:"name" validate:"required"`
-		Email    string `json:"email" validate:"required,email"`
+		Email    string `json:"email" validate:"email"`
 		Number   string `json:"number" validate:"required"`
-		Password string `json:"password" validate:"required, min=8"`
+		Password string `json:"password" validate:"required"`
+		Role     string `json:"role" validate:"oneof=Administrator User"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	user := entity.NewUser(input.Name, input.Email, input.Number, input.Password)
+	user := entity.NewUser(input.Name, input.Email, input.Number, input.Password, input.Role)
 	err := h.userService.CreateUser(ctx.Request().Context(), user)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, err)
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message":    "user created successfully",
-		"user":       user,
 		"created_at": user.CreatedAt,
 	})
 }
 
 func (h *UserHandler) UpdateUser(ctx echo.Context) error {
 	var input struct {
-		ID       int64  `json:"id" validate:"required"`
-		Name     string `json:"name" validate:"required"`
-		Email    string `json:"email" validate:"required,email"`
-		Number   string `json:"number" validate:"required"`
-		Password string `json:"password" validate:"required"`
+		ID       int64  `json:"id"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		Number   string `json:"number"`
+		Password string `json:"password"`
+		Role     string `json:"role" validate:"oneof=Administrator User"`
 	}
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	user := entity.UpdateUser(input.ID, input.Name, input.Email, input.Number, input.Password)
+	user := entity.UpdateUser(input.ID, input.Name, input.Email, input.Number, input.Password, input.Role)
 
 	err := h.userService.UpdateUser(ctx.Request().Context(), user)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, err)
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message":    "success update user",
-		"user":       user,
 		"updated_at": user.UpdatedAt,
 	})
 }
@@ -135,7 +135,7 @@ func (h *UserHandler) FindUserByID(ctx echo.Context) error {
 
 func (h *UserHandler) FindUserByEmail(ctx echo.Context) error {
 	var input struct {
-		Email string `json:"email" validate:"required,email"`
+		Email string `json:"email" form:"email" query:"email" validate:"email"`
 	}
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{

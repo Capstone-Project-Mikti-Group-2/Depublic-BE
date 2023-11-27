@@ -5,42 +5,47 @@ import (
 )
 
 type User struct {
-	ID        int64      `json:"id"`
-	Name      string     `json:"username"`
-	Email     string     `json:"email"`
-	Number    string     `json:"number"`
-	Password  string     `json:"-"`
-	CreatedAt time.Time  `json:"createdAt"`
-	UpdatedAt time.Time  `json:"updatedAt"`
-	DeletedAt *time.Time `json:"deletedAt,omitempy"`
+	ID        int64     `json:"id"`
+	Name      string    `json:"username"`
+	Email     string    `json:"email"`
+	Number    string    `json:"number"`
+	Password  string    `json:"-"`
+	Role      string    `json:"role"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	DeletedAt time.Time `json:"deletedAt"`
 }
 
-func NewUser(name, email, number, password string) *User {
+func NewUser(name, email, number, password, role string) *User {
 	return &User{
 		Name:      name,
 		Email:     email,
 		Password:  password,
 		Number:    number,
+		Role:      role,
 		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 }
 
-func UpdateUser(id int64, name, email, number, password string) *User {
+func UpdateUser(id int64, name, email, number, password, role string) *User {
 	return &User{
 		ID:        id,
 		Name:      name,
 		Email:     email,
 		Number:    number,
+		Role:      role,
 		Password:  password,
 		UpdatedAt: time.Now(),
 	}
 }
 
-func Register(name, email, password, number string) *User {
+func Register(name, email, password, number, role string) *User {
 	return &User{
 		Name:     name,
 		Email:    email,
 		Password: password,
 		Number:   number,
+		Role:     role,
 	}
 }

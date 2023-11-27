@@ -67,16 +67,17 @@ func (h *AuthHandler) Registration(ctx echo.Context) error {
 		Email    string `json:"email" validate:"email"`
 		Password string `json:"password" validate:"required"`
 		Number   string `json:"number" validate:"required"`
+		Role     string `json:"role" validate:"oneof=Administrator User"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	user := entity.Register(input.Name, input.Email, input.Password, input.Number)
+	user := entity.Register(input.Name, input.Email, input.Password, input.Number, input.Role)
 	err := h.registrationService.Registration(ctx.Request().Context(), user)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, err)
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
 
 	accessToken, err := h.tokenService.GenerateToken(ctx.Request().Context(), user)

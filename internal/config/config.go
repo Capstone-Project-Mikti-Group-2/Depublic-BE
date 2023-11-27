@@ -25,7 +25,7 @@ type PostgresConfig struct {
 	Port     string `env:"PORT" envDefault:"5432"`
 	User     string `env:"USER" envDefault:"postgres"`
 	Password string `env:"PASSWORD" envDefault:"postgres"`
-	Database string `env:"DATABASE" envDefault:"depublic"`
+	Database string `env:"DATABASE" envDefault:"depublic-db"`
 }
 
 // NewConfig digunakan untuk membuat config baru

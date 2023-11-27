@@ -39,8 +39,8 @@ func ValidatorErrors(err error) map[string]string {
 				fields[err.Field()] = fmt.Sprintf("field %s harus di isi", err.Field())
 			case "password":
 				fields[err.Field()] = "Password harus mengandung setidaknya satu huruf besar dan nomor"
-			case "number":
-				fields[err.Field()] = "Nomor harus berupa angka"
+			case "oneof":
+				fields[err.Field()] = fmt.Sprintf("field %s harus di isi dengan salah satu dari %s", err.Field(), err.Param())
 			default:
 				fields[err.Field()] = fmt.Sprintf("kesalahan pada %s dengan tag %s seharusnya %s ", err.Field(), err.Tag(), err.Param())
 			}

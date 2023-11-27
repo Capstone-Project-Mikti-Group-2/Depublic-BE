@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserUseCase interface {
@@ -39,10 +41,27 @@ func NewUserService(repository UserRepository) *UserService {
 }
 
 func (s *UserService) CreateUser(ctx context.Context, user *entity.User) error {
+	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hasedPassword)
 	return s.repository.CreateUser(ctx, user)
 }
 
 func (s *UserService) UpdateUser(ctx context.Context, user *entity.User) error {
+	if user.Role != "" {
+		if user.Role != "Administrator" && user.Role != "User" {
+			return errors.New("role must be Administrator or User")
+		}
+	}
+	if user.Password != "" {
+		hasedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hasedPassword)
+	}
 	return s.repository.UpdateUser(ctx, user)
 }
 
