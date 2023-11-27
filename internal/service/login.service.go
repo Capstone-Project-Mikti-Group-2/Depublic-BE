@@ -12,7 +12,7 @@ type LoginUseCase interface {
 }
 
 type LoginRepository interface {
-	FindUserByEmail(ctx context.Context, email string) (*entity.User, error)
+	FindByEmail(ctx context.Context, email string) (*entity.User, error)
 }
 
 type LoginService struct {
@@ -26,7 +26,7 @@ func NewLoginService(repo LoginRepository) *LoginService {
 }
 
 func (s *LoginService) Login(ctx context.Context, email, password string) (*entity.User, error) {
-	user, err := s.repo.FindUserByEmail(ctx, email)
+	user, err := s.repo.FindByEmail(ctx, email)
 	if err != nil {
 		return nil, err
 	}

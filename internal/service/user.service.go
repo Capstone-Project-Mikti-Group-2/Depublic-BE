@@ -33,7 +33,9 @@ type UserService struct {
 }
 
 func NewUserService(repository UserRepository) *UserService {
-	return &UserService{repository}
+	return &UserService{
+		repository: repository,
+	}
 }
 
 func (s *UserService) CreateUser(ctx context.Context, user *entity.User) error {
