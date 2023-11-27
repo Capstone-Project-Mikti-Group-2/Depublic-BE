@@ -1,6 +1,8 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/binder"
@@ -36,7 +38,7 @@ func NewServer(
 	}
 
 	for _, private := range privateRoutes {
-		v1.Add(private.Method, private.Path, private.Handler, JWTProtected(cfg.JWT.SecretKey)) //JWTProtected(cfg.JWT.SecretKey)
+		v1.Add(private.Method, private.Path, private.Handler, JWTProtected(cfg.JWT.SecretKey), RBACMiddleware(private.Roles...)) //JWTProtected(cfg.JWT.SecretKey)
 	}
 	e.GET("/ping", func(c echo.Context) error {
 		return c.String(200, "pong")
@@ -51,4 +53,35 @@ func JWTProtected(SecretKey string) echo.MiddlewareFunc {
 		},
 		SigningKey: []byte(SecretKey),
 	})
+}
+
+func RBACMiddleware(roles ...string) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			user, ok := c.Get("user").(*jwt.Token)
+			if !ok {
+				return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+					"message": "Silahkan login terlebih dahulu",
+				})
+			}
+			claims := user.Claims.(*common.JwtCustomClaims)
+
+			//cek apakah user mempunyai role yang diinginkan
+			if !contains(roles, claims.Role) {
+				return c.JSON(http.StatusForbidden, map[string]interface{}{
+					"message": "Anda tidak diizinkan untuk mengakses resource ini",
+				})
+			}
+			return next(c)
+		}
+	}
+}
+
+func contains(slice []string, s string) bool {
+	for _, value := range slice {
+		if value == s {
+			return true
+		}
+	}
+	return false
 }

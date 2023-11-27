@@ -1,10 +1,15 @@
-CREATE TABLE "public"."users" (
-    id SERIAL NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    number VARCHAR(255) NOT NULL,
-    Created_At TIMESTAMP,
-    Updated_At TIMESTAMP,
-    Deleted_At TIMESTAMP
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS "public"."users" (
+    "id" SERIAL NOT NULL PRIMARY KEY,
+    "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+    "email" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+    "password" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+    "number" varchar(255),
+    "role" varchar(255),
+    "created_at" timestamptz (6) NOT NULL,
+    "updated_at" timestamptz (6) NOT NULL,
+    "deleted_at" timestamptz (6)
 );
+
+COMMIT;

@@ -27,7 +27,23 @@ func (r *UserRepository) CreateUser(ctx context.Context, user *entity.User) erro
 
 // Update User by ID (Update User)
 func (r *UserRepository) UpdateUser(ctx context.Context, user *entity.User) error {
-	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(user).Error; err != nil {
+	query := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID)
+	if user.Name != "" {
+		query = query.Update("name", user.Name)
+	}
+	if user.Email != "" {
+		query = query.Update("email", user.Email)
+	}
+	if user.Number != "" {
+		query = query.Update("number", user.Number)
+	}
+	if user.Password != "" {
+		query = query.Update("password", user.Password)
+	}
+	if user.Role != "" {
+		query = query.Update("role", user.Role)
+	}
+	if err := query.Error; err != nil {
 		return err
 	}
 	return nil

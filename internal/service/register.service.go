@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type RegistrationUseCase interface {
@@ -25,7 +27,13 @@ func NewRegistrationService(repo RegistrationRepository) *RegistrationService {
 }
 
 func (s *RegistrationService) Registration(ctx context.Context, user *entity.User) error {
-	err := s.repo.Registration(ctx, user)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return errors.New("failed to hash password")
+	}
+	user.Password = string(hashedPassword)
+
+	err = s.repo.Registration(ctx, user)
 	if err != nil {
 		return err
 	}

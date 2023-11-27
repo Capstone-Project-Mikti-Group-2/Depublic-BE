@@ -30,6 +30,7 @@ func (s *TokenService) GenerateToken(ctx context.Context, user *entity.User) (st
 		ID:    user.ID,
 		Name:  user.Name,
 		Email: user.Email,
+		Role:  user.Role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expiredTime),
 		},
