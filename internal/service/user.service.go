@@ -14,7 +14,7 @@ type UserUseCase interface {
 	DeleteUser(ctx context.Context, id int64) error
 	FindAllUser(ctx context.Context) ([]*entity.User, error)
 	FindUserByID(ctx context.Context, id int64) (*entity.User, error)
-	FindUserByEmail(ctx context.Context, email string) (*entity.User, error)
+	FindByEmail(ctx context.Context, email string) (*entity.User, error)
 	FindUserByNumber(ctx context.Context, number string) (*entity.User, error)
 	FindUserByUsername(ctx context.Context, username string) (*entity.User, error)
 }
@@ -24,7 +24,7 @@ type UserRepository interface {
 	DeleteUser(ctx context.Context, id int64) error
 	FindAllUser(ctx context.Context) ([]*entity.User, error)
 	FindUserByID(ctx context.Context, id int64) (*entity.User, error)
-	FindUserByEmail(ctx context.Context, email string) (*entity.User, error)
+	FindByEmail(ctx context.Context, email string) (*entity.User, error)
 	FindUserByNumber(ctx context.Context, number string) (*entity.User, error)
 	FindUserByUsername(ctx context.Context, username string) (*entity.User, error)
 }
@@ -76,8 +76,8 @@ func (s *UserService) FindUserByID(ctx context.Context, id int64) (*entity.User,
 	return s.repository.FindUserByID(ctx, id)
 }
 
-func (s *UserService) FindUserByEmail(ctx context.Context, email string) (*entity.User, error) {
-	return s.repository.FindUserByEmail(ctx, email)
+func (s *UserService) FindByEmail(ctx context.Context, email string) (*entity.User, error) {
+	return s.repository.FindByEmail(ctx, email)
 }
 
 func (s *UserService) FindUserByNumber(ctx context.Context, number string) (*entity.User, error) {
