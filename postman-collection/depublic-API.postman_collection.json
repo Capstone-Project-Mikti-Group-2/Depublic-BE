@@ -61,7 +61,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user3@gmail.com\",\r\n    \"password\": \"User1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user1@gmail.com\",\r\n    \"password\": \"User1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,7 +96,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIzIiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTExMTI5MX0.a1nNy0bYChXtdAhzhqLzplAIunritoHmBVkzQu8Ij4M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
 									"type": "string"
 								}
 							]
@@ -127,7 +127,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIzIiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTExMTI5MX0.a1nNy0bYChXtdAhzhqLzplAIunritoHmBVkzQu8Ij4M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
 									"type": "string"
 								}
 							]
@@ -150,7 +150,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -165,7 +165,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIzIiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTExMTI5MX0.a1nNy0bYChXtdAhzhqLzplAIunritoHmBVkzQu8Ij4M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
 									"type": "string"
 								}
 							]
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"user4\",\r\n    \"email\": \"user4@gmail.com\",\r\n    \"password\": \"User1234\",\r\n    \"number\": \"082187182012\",\r\n    \"role\" : \"User\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"user2\",\r\n    \"email\": \"user2@gmail.com\",\r\n    \"password\": \"User1234\",\r\n    \"number\": \"082187182012\",\r\n    \"role\" : \"User\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +204,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIzIiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTExMTI5MX0.a1nNy0bYChXtdAhzhqLzplAIunritoHmBVkzQu8Ij4M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
 									"type": "string"
 								}
 							]
@@ -324,9 +324,206 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/users/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile Handler",
+			"item": [
+				{
+					"name": "Get Profile By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/profile/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1ODczM30.lsCbg6OWxoLCcbINMapVMstIEnB9AuyzaNRsY_SL4ec",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"address\":\"Semarang\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"address\":\"Brebes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/profile/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/profile/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
 	]
-	
 }

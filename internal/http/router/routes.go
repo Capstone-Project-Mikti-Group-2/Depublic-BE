@@ -37,8 +37,8 @@ func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
 	}
 }
 
-func PrivateRoutes(UserHandler *handler.UserHandler) []*Route {
-	return []*Route{
+func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler) []*Route {
+	userRoutes := []*Route{
 		{
 			Method:  echo.POST,
 			Path:    "/users",
@@ -47,7 +47,7 @@ func PrivateRoutes(UserHandler *handler.UserHandler) []*Route {
 		},
 		{
 			Method:  echo.PUT,
-			Path:    "/users",
+			Path:    "/users/:id",
 			Handler: UserHandler.UpdateUser,
 			Roles:   allRoles,
 		},
@@ -72,7 +72,7 @@ func PrivateRoutes(UserHandler *handler.UserHandler) []*Route {
 		{
 			Method:  echo.GET,
 			Path:    "/users/email/:email",
-			Handler: UserHandler.FindUserByEmail,
+			Handler: UserHandler.FindByEmail,
 			Roles:   onlyAdmin,
 		},
 		{
@@ -88,6 +88,34 @@ func PrivateRoutes(UserHandler *handler.UserHandler) []*Route {
 			Roles:   onlyAdmin,
 		},
 	}
-}
 
-//edit for testing
+	profileRoutes := []*Route{
+		{
+			Method:  echo.GET,
+			Path:    "/profile/:id",
+			Handler: ProfileHandler.GetProfileByID,
+			Roles:   allRoles,
+		},
+		{
+			Method:  echo.PUT,
+			Path:    "/profile/:id",
+			Handler: ProfileHandler.UpdateProfile,
+			Roles:   allRoles,
+		},
+		{
+			Method:  echo.POST,
+			Path:    "/profile",
+			Handler: ProfileHandler.CreateProfile,
+			Roles:   allRoles,
+		},
+		{
+			Method:  echo.DELETE,
+			Path:    "/profile/:id",
+			Handler: ProfileHandler.DeleteProfile,
+			Roles:   allRoles,
+		},
+	}
+	allRoutes := append(userRoutes, profileRoutes...)
+
+	return allRoutes
+}

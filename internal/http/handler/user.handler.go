@@ -100,8 +100,19 @@ func (h *UserHandler) FindAllUser(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
+	var responseData []map[string]interface{}
+	for _, user := range users {
+		responseData = append(responseData, map[string]interface{}{
+			"id":         user.ID,
+			"name":       user.Name,
+			"email":      user.Email,
+			"number":     user.Number,
+			"created_at": user.CreatedAt,
+			"updated_at": user.UpdatedAt,
+		})
+	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"data": users,
+		"data": responseData,
 	})
 }
 
@@ -133,7 +144,7 @@ func (h *UserHandler) FindUserByID(ctx echo.Context) error {
 	})
 }
 
-func (h *UserHandler) FindUserByEmail(ctx echo.Context) error {
+func (h *UserHandler) FindByEmail(ctx echo.Context) error {
 	var input struct {
 		Email string `json:"email" form:"email" query:"email" validate:"email"`
 	}
@@ -143,7 +154,7 @@ func (h *UserHandler) FindUserByEmail(ctx echo.Context) error {
 		})
 	}
 
-	user, err := h.userService.FindUserByEmail(ctx.Request().Context(), input.Email)
+	user, err := h.userService.FindByEmail(ctx.Request().Context(), input.Email)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
 			"error": err.Error(),
@@ -215,5 +226,3 @@ func (h *UserHandler) FindUserByNumber(ctx echo.Context) error {
 		},
 	})
 }
-
-//edit for github

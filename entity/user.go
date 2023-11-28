@@ -11,6 +11,7 @@ type User struct {
 	Number    string    `json:"number"`
 	Password  string    `json:"-"`
 	Role      string    `json:"role"`
+	Profile   *Profile  `json:"profile"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 	DeletedAt time.Time `json:"deletedAt"`
