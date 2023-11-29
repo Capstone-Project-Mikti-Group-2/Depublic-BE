@@ -31,6 +31,11 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
 	profileService := service.NewProfileService(profileRepository)
 	profileHandler := handler.NewProfileHandler(cfg, profileService)
 
+	//create event handler
+	eventRepository := repository.NewEventRepository(db)
+	eventService := service.NewEventService(eventRepository)
+	eventHandler := handler.NewEventHandler(cfg, eventService)
+
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler)
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler)
 }

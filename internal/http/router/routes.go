@@ -37,85 +37,123 @@ func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
 	}
 }
 
-func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler) []*Route {
-	userRoutes := []*Route{
+func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler) []*Route {
+	allRoutes := []*Route{}
+
+	routeSlices := [][]*Route{
 		{
-			Method:  echo.POST,
-			Path:    "/users",
-			Handler: UserHandler.CreateUser,
-			Roles:   onlyAdmin,
+			{ //users Routes
+				Method:  echo.POST,
+				Path:    "/users",
+				Handler: UserHandler.CreateUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/users/:id",
+				Handler: UserHandler.UpdateUser,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users/:id",
+				Handler: UserHandler.DeleteUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users",
+				Handler: UserHandler.FindAllUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/:id",
+				Handler: UserHandler.FindUserByID,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/email/:email",
+				Handler: UserHandler.FindByEmail,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/number/:number",
+				Handler: UserHandler.FindUserByNumber,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/name/:name",
+				Handler: UserHandler.FindUserByUsername,
+				Roles:   onlyAdmin,
+			},
 		},
 		{
-			Method:  echo.PUT,
-			Path:    "/users/:id",
-			Handler: UserHandler.UpdateUser,
-			Roles:   allRoles,
+			{ //profile Routes
+				Method:  echo.GET,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.GetProfileByID,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.UpdateProfile,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/profile",
+				Handler: ProfileHandler.CreateProfile,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.DeleteProfile,
+				Roles:   allRoles,
+			},
 		},
 		{
-			Method:  echo.DELETE,
-			Path:    "/users/:id",
-			Handler: UserHandler.DeleteUser,
-			Roles:   onlyAdmin,
-		},
-		{
-			Method:  echo.GET,
-			Path:    "/users",
-			Handler: UserHandler.FindAllUser,
-			Roles:   onlyAdmin,
-		},
-		{
-			Method:  echo.GET,
-			Path:    "/users/:id",
-			Handler: UserHandler.FindUserByID,
-			Roles:   onlyAdmin,
-		},
-		{
-			Method:  echo.GET,
-			Path:    "/users/email/:email",
-			Handler: UserHandler.FindByEmail,
-			Roles:   onlyAdmin,
-		},
-		{
-			Method:  echo.GET,
-			Path:    "/users/number/:number",
-			Handler: UserHandler.FindUserByNumber,
-			Roles:   onlyAdmin,
-		},
-		{
-			Method:  echo.GET,
-			Path:    "/users/name/:name",
-			Handler: UserHandler.FindUserByUsername,
-			Roles:   onlyAdmin,
+			{ //event Routes
+				Method:  echo.POST,
+				Path:    "/events",
+				Handler: EventHandler.CreateEvent,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/events/:id",
+				Handler: EventHandler.UpdateEvent,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/events/:id",
+				Handler: EventHandler.DeleteEvent,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events",
+				Handler: EventHandler.FindAllEvent,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/:id",
+				Handler: EventHandler.FindEventByID,
+				Roles:   allRoles,
+			},
 		},
 	}
 
-	profileRoutes := []*Route{
-		{
-			Method:  echo.GET,
-			Path:    "/profile/:id",
-			Handler: ProfileHandler.GetProfileByID,
-			Roles:   allRoles,
-		},
-		{
-			Method:  echo.PUT,
-			Path:    "/profile/:id",
-			Handler: ProfileHandler.UpdateProfile,
-			Roles:   allRoles,
-		},
-		{
-			Method:  echo.POST,
-			Path:    "/profile",
-			Handler: ProfileHandler.CreateProfile,
-			Roles:   allRoles,
-		},
-		{
-			Method:  echo.DELETE,
-			Path:    "/profile/:id",
-			Handler: ProfileHandler.DeleteProfile,
-			Roles:   allRoles,
-		},
+	for _, routes := range routeSlices {
+		allRoutes = append(allRoutes, routes...)
 	}
-	allRoutes := append(userRoutes, profileRoutes...)
 
 	return allRoutes
 }
