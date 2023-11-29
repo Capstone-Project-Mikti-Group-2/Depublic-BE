@@ -55,7 +55,13 @@ func ValidatorErrors(err error) map[string]string {
 }
 
 func validDateValidator(fl validator.FieldLevel) bool {
-	dateString := fl.Field().String()
+	field := fl.Field()
+
+	if field.Kind() != reflect.String {
+		return false
+	}
+
+	dateString := field.String()
 	_, err := time.Parse("2006-01-02", dateString)
 	return err == nil
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 )
@@ -12,6 +13,11 @@ type EventRepository interface {
 	DeleteEvent(ctx context.Context, id int64) error
 	FindAllEvent(ctx context.Context) ([]*entity.Event, error)
 	FindEventByID(ctx context.Context, id int64) (*entity.Event, error)
+	SearchEvent(ctx context.Context, keyword string) ([]*entity.Event, error)
+	FilterEventByPrice(ctx context.Context, min, max string) ([]*entity.Event, error)
+	FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error)
+	FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error)
+	FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error)
 }
 
 type EventUseCase interface {
@@ -20,6 +26,11 @@ type EventUseCase interface {
 	DeleteEvent(ctx context.Context, id int64) error
 	FindAllEvent(ctx context.Context) ([]*entity.Event, error)
 	FindEventByID(ctx context.Context, id int64) (*entity.Event, error)
+	SearchEvent(ctx context.Context, keyword string) ([]*entity.Event, error)
+	FilterEventByPrice(ctx context.Context, min, max string) ([]*entity.Event, error)
+	FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error)
+	FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error)
+	FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error)
 }
 
 type EventService struct {
@@ -67,4 +78,44 @@ func (s *EventService) FindEventByID(ctx context.Context, id int64) (*entity.Eve
 		return nil, err
 	}
 	return event, nil
+}
+
+func (s *EventService) SearchEvent(ctx context.Context, keyword string) ([]*entity.Event, error) {
+	events, err := s.repository.SearchEvent(ctx, keyword)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) FilterEventByPrice(ctx context.Context, min, max string) ([]*entity.Event, error) {
+	events, err := s.repository.FilterEventByPrice(ctx, min, max)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error) {
+	events, err := s.repository.FilterEventByDate(ctx, startDate, endDate)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error) {
+	events, err := s.repository.FilterEventByLocation(ctx, location)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error) {
+	events, err := s.repository.FilterEventByAvailable(ctx, available)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
 }

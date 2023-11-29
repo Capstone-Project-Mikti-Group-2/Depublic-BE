@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"time"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"gorm.io/gorm"
@@ -47,10 +48,10 @@ func (r *EventRepository) UpdateEvent(ctx context.Context, event *entity.Event) 
 	if event.Image != nil {
 		query = query.Update("image", event.Image)
 	}
-	if event.StartDate != "" {
+	if event.StartDate.IsZero() {
 		query = query.Update("start_date", event.StartDate)
 	}
-	if event.EndDate != "" {
+	if event.EndDate.IsZero() {
 		query = query.Update("end_date", event.EndDate)
 	}
 	return nil
@@ -79,4 +80,49 @@ func (r *EventRepository) FindEventByID(ctx context.Context, id int64) (*entity.
 		return nil, err
 	}
 	return event, nil
+}
+
+func (r *EventRepository) FilterEventByPrice(ctx context.Context, min, max string) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Where("price >= ? And price <= ?", min, max).Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Where("start_date >= ? And end_date <= ?", startDate, endDate).Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Where("location ILIKE ?", "%"+location+"%").Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) SearchEvent(ctx context.Context, keyword string) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Where("name ILIKE ?", "%"+keyword+"%").Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Where("available = ?", available).Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
 }

@@ -40,8 +40,19 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	event := entity.NewEvent(0, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, input.StartDate, input.EndDate)
-	err := h.eventService.CreateEvent(ctx.Request().Context(), event)
+	// Convert string dates to time.Time
+	startDate, err := time.Parse("2006-01-02", input.StartDate)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"start_date": "invalid date format"})
+	}
+
+	endDate, err := time.Parse("2006-01-02", input.EndDate)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"end_date": "invalid date format"})
+	}
+
+	event := entity.NewEvent(0, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
+	err = h.eventService.CreateEvent(ctx.Request().Context(), event)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
@@ -69,9 +80,19 @@ func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
+	// Convert string dates to time.Time
+	startDate, err := time.Parse("2006-01-02", input.StartDate)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"start_date": "invalid date format"})
+	}
 
-	event := entity.UpdateEvent(input.ID, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, input.StartDate, input.EndDate)
-	err := h.eventService.UpdateEvent(ctx.Request().Context(), event)
+	endDate, err := time.Parse("2006-01-02", input.EndDate)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"end_date": "invalid date format"})
+	}
+
+	event := entity.NewEvent(0, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
+	err = h.eventService.CreateEvent(ctx.Request().Context(), event)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
@@ -146,5 +167,112 @@ func (h *EventHandler) DeleteEvent(ctx echo.Context) error {
 		"message": "event deleted successfully",
 		"id":      input.ID,
 		"deleted": time.Now(),
+	})
+}
+
+func (h *EventHandler) SearchEvent(ctx echo.Context) error {
+	var input struct {
+		Keyword string `param:"keyword" validate:"required"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	events, err := h.eventService.SearchEvent(ctx.Request().Context(), input.Keyword)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": events,
+	})
+}
+func (h *EventHandler) FilterEventByPrice(ctx echo.Context) error {
+	var input struct {
+		Min string `param:"min"`
+		Max string `param:"max"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	events, err := h.eventService.FilterEventByPrice(ctx.Request().Context(), input.Min, input.Max)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": events,
+	})
+}
+
+// this handler still bugging idk why
+func (h *EventHandler) FilterEventByDate(ctx echo.Context) error {
+	var input struct {
+		Start string `param:"start_date" validate:"validDate"`
+		End   string `param:"end_date" validate:"validDate"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	startDate, err := time.Parse("2006-01-02", input.Start)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"start_date": "Invalid date format"})
+	}
+
+	endDate, err := time.Parse("2006-01-02", input.End)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"end_date": "Invalid date format"})
+	}
+
+	event, err := h.eventService.FilterEventByDate(ctx.Request().Context(), startDate, endDate)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
+	})
+}
+
+func (h *EventHandler) FilterEventByLocation(ctx echo.Context) error {
+	var input struct {
+		Location string `param:"location"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	event, err := h.eventService.FilterEventByLocation(ctx.Request().Context(), input.Location)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
+	})
+}
+
+func (h *EventHandler) FilterEventByAvailable(ctx echo.Context) error {
+	var input struct {
+		Available bool `param:"available"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	event, err := h.eventService.FilterEventByAvailable(ctx.Request().Context(), input.Available)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
 	})
 }
