@@ -25,15 +25,15 @@ func NewEventHandler(
 
 func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 	var input struct {
-		Name        string    `json:"name" validate:"required"`
-		Description string    `json:"description" validate:"required"`
-		Location    string    `json:"location" validate:"required"`
-		Price       int64     `json:"price" validate:"required"`
-		Quantity    int64     `json:"quantity" validate:"required"`
-		Image       []byte    `json:"image"`
-		StartDate   time.Time `json:"start_date" validate:"required"`
-		EndDate     time.Time `json:"end_date" validate:"required"`
-		Available   bool      `json:"available" validate:"required"`
+		Name        string `json:"name" validate:"required"`
+		Description string `json:"description" validate:"required"`
+		Location    string `json:"location" validate:"required"`
+		Price       int64  `json:"price" validate:"required"`
+		Quantity    int64  `json:"quantity" validate:"required"`
+		Image       []byte `json:"image"`
+		StartDate   string `json:"start_date" validate:"validDate"`
+		EndDate     string `json:"end_date" validate:"validDate"`
+		Available   bool   `json:"available" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -54,16 +54,16 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 
 func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 	var input struct {
-		ID          int64     `json:"id"`
-		Name        string    `json:"name"`
-		Description string    `json:"description"`
-		Location    string    `json:"location"`
-		Price       int64     `json:"price"`
-		Quantity    int64     `json:"quantity"`
-		Image       []byte    `json:"image"`
-		StartDate   time.Time `json:"start_date"`
-		EndDate     time.Time `json:"end_date"`
-		Available   bool      `json:"available"`
+		ID          int64  `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Location    string `json:"location"`
+		Price       int64  `json:"price"`
+		Quantity    int64  `json:"quantity"`
+		Image       []byte `json:"image"`
+		StartDate   string `json:"start_date" validate:"validDate"`
+		EndDate     string `json:"end_date" validate:"validDate"`
+		Available   bool   `json:"available"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {

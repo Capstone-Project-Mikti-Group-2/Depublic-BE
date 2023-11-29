@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"time"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"gorm.io/gorm"
@@ -48,10 +47,10 @@ func (r *EventRepository) UpdateEvent(ctx context.Context, event *entity.Event) 
 	if event.Image != nil {
 		query = query.Update("image", event.Image)
 	}
-	if event.StartDate != (time.Time{}) {
+	if event.StartDate != "" {
 		query = query.Update("start_date", event.StartDate)
 	}
-	if event.EndDate != (time.Time{}) {
+	if event.EndDate != "" {
 		query = query.Update("end_date", event.EndDate)
 	}
 	return nil
