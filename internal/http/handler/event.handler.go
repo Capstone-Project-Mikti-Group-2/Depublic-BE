@@ -65,7 +65,7 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 
 func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 	var input struct {
-		ID          int64  `json:"id"`
+		ID          int64  `param:"id"`
 		Name        string `json:"name"`
 		Description string `json:"description"`
 		Location    string `json:"location"`
@@ -151,7 +151,7 @@ func (h *EventHandler) FindAllEvent(ctx echo.Context) error {
 
 func (h *EventHandler) DeleteEvent(ctx echo.Context) error {
 	var input struct {
-		ID int64 `json:"id" validate:"required"`
+		ID int64 `param:"id" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {

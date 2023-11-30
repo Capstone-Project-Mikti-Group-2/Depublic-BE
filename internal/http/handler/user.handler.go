@@ -50,7 +50,7 @@ func (h *UserHandler) CreateUser(ctx echo.Context) error {
 
 func (h *UserHandler) UpdateUser(ctx echo.Context) error {
 	var input struct {
-		ID       int64  `json:"id"`
+		ID       int64  `param:"id"`
 		Name     string `json:"name"`
 		Email    string `json:"email"`
 		Number   string `json:"number"`
@@ -76,7 +76,7 @@ func (h *UserHandler) UpdateUser(ctx echo.Context) error {
 
 func (h *UserHandler) DeleteUser(ctx echo.Context) error {
 	var input struct {
-		ID int64 `json:"id" validate:"required"`
+		ID int64 `param:"id" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -174,19 +174,16 @@ func (h *UserHandler) FindByEmail(ctx echo.Context) error {
 
 func (h *UserHandler) FindUserByUsername(ctx echo.Context) error {
 	var input struct {
-		Username string `json:"username" validate:"required"`
+		Username string `param:"username" validate:"required"`
 	}
+
 	if err := ctx.Bind(&input); err != nil {
-		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
-			"error": "invalid username",
-		})
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
 	user, err := h.userService.FindUserByUsername(ctx.Request().Context(), input.Username)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
-			"error": err.Error(),
-		})
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"data": map[string]interface{}{
@@ -202,18 +199,16 @@ func (h *UserHandler) FindUserByUsername(ctx echo.Context) error {
 
 func (h *UserHandler) FindUserByNumber(ctx echo.Context) error {
 	var input struct {
-		Number string `json:"number" validate:"required"`
+		Number string `param:"number" validate:"required"`
 	}
+
 	if err := ctx.Bind(&input); err != nil {
-		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
-			"error": "invalid number",
-		})
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
+
 	user, err := h.userService.FindUserByNumber(ctx.Request().Context(), input.Number)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
-			"error": err.Error(),
-		})
+		return ctx.JSON(http.StatusUnprocessableEntity, validator.ValidatorErrors(err))
 	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"data": map[string]interface{}{

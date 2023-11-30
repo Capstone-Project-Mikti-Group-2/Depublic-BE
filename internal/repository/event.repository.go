@@ -26,34 +26,12 @@ func (r *EventRepository) CreateEvent(ctx context.Context, event *entity.Event) 
 }
 
 func (r *EventRepository) UpdateEvent(ctx context.Context, event *entity.Event) error {
-	query := r.db.WithContext(ctx).Model(event).Where("id = ?", event.ID)
-	if event.Name != "" {
-		query = query.Update("name", event.Name)
+	query := r.db.WithContext(ctx).Model(event).Where("id = ?", event.ID).Updates(event)
+
+	if query.Error != nil {
+		return query.Error
 	}
-	if event.Description != "" {
-		query = query.Update("description", event.Description)
-	}
-	if event.Location != "" {
-		query = query.Update("location", event.Location)
-	}
-	if event.Price != 0 {
-		query = query.Update("price", event.Price)
-	}
-	if event.Quantity != 0 {
-		query = query.Update("quantity", event.Quantity)
-	}
-	if event.Available != true {
-		query = query.Update("available", event.Available)
-	}
-	if event.Image != nil {
-		query = query.Update("image", event.Image)
-	}
-	if event.StartDate.IsZero() {
-		query = query.Update("start_date", event.StartDate)
-	}
-	if event.EndDate.IsZero() {
-		query = query.Update("end_date", event.EndDate)
-	}
+
 	return nil
 }
 

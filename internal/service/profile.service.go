@@ -33,10 +33,7 @@ func NewProfileService(repository ProfileRepository) *ProfileService {
 }
 
 func (s *ProfileService) CreateProfile(ctx context.Context, profile *entity.Profile) error {
-	if err := s.repository.CreateProfile(ctx, profile); err != nil {
-		return err
-	}
-	return nil
+	return s.repository.CreateProfile(ctx, profile)
 }
 
 func (s *ProfileService) UpdateProfile(ctx context.Context, profile *entity.Profile) error {
@@ -59,19 +56,9 @@ func (s *ProfileService) UpdateProfile(ctx context.Context, profile *entity.Prof
 }
 
 func (s *ProfileService) DeleteProfile(ctx context.Context, id int64) error {
-	if err := s.repository.DeleteProfile(ctx, id); err != nil {
-		return err
-	}
-	return nil
+	return s.repository.DeleteProfile(ctx, id)
 }
 
 func (s *ProfileService) GetProfileByID(ctx context.Context, id int64) (*entity.Profile, error) {
-	profile, err := s.repository.GetProfileByID(ctx, id)
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errors.New("profile not found")
-		}
-		return nil, err
-	}
-	return profile, nil
+	return s.repository.GetProfileByID(ctx, id)
 }

@@ -90,7 +90,7 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*entity
 // Get User by Username (Find User by Username)
 func (r *UserRepository) FindUserByUsername(ctx context.Context, username string) (*entity.User, error) {
 	user := new(entity.User)
-	err := r.db.WithContext(ctx).Where("username = ?", username).First(user).Error
+	err := r.db.WithContext(ctx).Where("name ILIKE ?", "%"+username+"%").Find(user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (r *UserRepository) FindUserByUsername(ctx context.Context, username string
 // Get User by Number (Find User by Number Phone)
 func (r *UserRepository) FindUserByNumber(ctx context.Context, number string) (*entity.User, error) {
 	user := new(entity.User)
-	err := r.db.WithContext(ctx).Where("number = ?", number).First(user).Error
+	err := r.db.WithContext(ctx).Where("number ILIKE = ?", "%"+number+"%").Find(user).Error
 	if err != nil {
 		return nil, err
 	}
