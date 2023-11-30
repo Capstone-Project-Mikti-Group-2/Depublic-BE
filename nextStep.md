@@ -31,6 +31,6 @@
 4. coba edit file readme.md exp: (edit by nama kalian)
 5. git add .
 6. git commit -m “edit readme by nama kalian”
-7. go mod tidy 
-8. (ketik dalam terminal) migrate -database postgres://postgres/password@localhost:5432/depublic-db?sslmode=disable -path db/migrations up
+7. go mod tidy
+8. (ketik dalam terminal) migrate -database postgres://postgres:password@localhost:5432/depublic-db?sslmode=disable -path db/migrations up
 9. go run cmd/server/main.go

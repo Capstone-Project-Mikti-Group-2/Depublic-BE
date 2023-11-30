@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -18,6 +19,9 @@ func (fv *FormValidator) Validate(i interface{}) error {
 
 func NewFormValidator() *FormValidator {
 	validate := validator.New(validator.WithRequiredStructEnabled())
+
+	//Register custom validators
+	validate.RegisterValidation("validDate", validDateValidator)
 
 	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
 		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
@@ -40,10 +44,24 @@ func ValidatorErrors(err error) map[string]string {
 				fields[err.Field()] = "Password harus mengandung setidaknya satu huruf besar dan nomor"
 			case "oneof":
 				fields[err.Field()] = fmt.Sprintf("field %s harus di isi dengan salah satu dari %s", err.Field(), err.Param())
+			case "validDate":
+				fields[err.Field()] = fmt.Sprintf("field %s harus di isi dengan format %s", err.Field(), err.Param())
 			default:
 				fields[err.Field()] = fmt.Sprintf("kesalahan pada %s dengan tag %s seharusnya %s ", err.Field(), err.Tag(), err.Param())
 			}
 		}
 	}
 	return fields
+}
+
+func validDateValidator(fl validator.FieldLevel) bool {
+	field := fl.Field()
+
+	if field.Kind() != reflect.String {
+		return false
+	}
+
+	dateString := field.String()
+	_, err := time.Parse("2006-01-02", dateString)
+	return err == nil
 }
