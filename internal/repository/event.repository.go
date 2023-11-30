@@ -126,3 +126,30 @@ func (r *EventRepository) FilterEventByAvailable(ctx context.Context, available 
 	}
 	return events, nil
 }
+
+func (r *EventRepository) SortEventByExpensive(ctx context.Context) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Order("price DESC").Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) SortEventByCheapest(ctx context.Context) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Order("price ASC").Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (r *EventRepository) SortEventByNewest(ctx context.Context) ([]*entity.Event, error) {
+	events := make([]*entity.Event, 0)
+	err := r.db.WithContext(ctx).Order("created_at DESC").Find(&events).Error
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}

@@ -2,9 +2,11 @@ package service
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
+	"gorm.io/gorm"
 )
 
 type EventRepository interface {
@@ -18,6 +20,9 @@ type EventRepository interface {
 	FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error)
 	FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error)
 	FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error)
+	SortEventByExpensive(ctx context.Context) ([]*entity.Event, error)
+	SortEventByCheapest(ctx context.Context) ([]*entity.Event, error)
+	SortEventByNewest(ctx context.Context) ([]*entity.Event, error)
 }
 
 type EventUseCase interface {
@@ -31,6 +36,9 @@ type EventUseCase interface {
 	FilterEventByDate(ctx context.Context, startDate, endDate time.Time) ([]*entity.Event, error)
 	FilterEventByLocation(ctx context.Context, location string) ([]*entity.Event, error)
 	FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error)
+	SortEventByExpensive(ctx context.Context) ([]*entity.Event, error)
+	SortEventByCheapest(ctx context.Context) ([]*entity.Event, error)
+	SortEventByNewest(ctx context.Context) ([]*entity.Event, error)
 }
 
 type EventService struct {
@@ -51,7 +59,26 @@ func (s *EventService) CreateEvent(ctx context.Context, event *entity.Event) err
 }
 
 func (s *EventService) UpdateEvent(ctx context.Context, event *entity.Event) error {
-	if err := s.repository.UpdateEvent(ctx, event); err != nil {
+	existingEvent, err := s.repository.FindEventByID(ctx, event.ID)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errors.New("event not found")
+		}
+		return err
+	}
+
+	existingEvent.ID = event.ID
+	existingEvent.Name = event.Name
+	existingEvent.Description = event.Description
+	existingEvent.StartDate = event.StartDate
+	existingEvent.EndDate = event.EndDate
+	existingEvent.Location = event.Location
+	existingEvent.Price = event.Price
+	existingEvent.Quantity = event.Quantity
+	existingEvent.Available = event.Available
+	existingEvent.Image = event.Image
+
+	if err := s.repository.UpdateEvent(ctx, existingEvent); err != nil {
 		return err
 	}
 	return nil
@@ -114,6 +141,30 @@ func (s *EventService) FilterEventByLocation(ctx context.Context, location strin
 
 func (s *EventService) FilterEventByAvailable(ctx context.Context, available bool) ([]*entity.Event, error) {
 	events, err := s.repository.FilterEventByAvailable(ctx, available)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) SortEventByExpensive(ctx context.Context) ([]*entity.Event, error) {
+	events, err := s.repository.SortEventByExpensive(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) SortEventByCheapest(ctx context.Context) ([]*entity.Event, error) {
+	events, err := s.repository.SortEventByCheapest(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+func (s *EventService) SortEventByNewest(ctx context.Context) ([]*entity.Event, error) {
+	events, err := s.repository.SortEventByNewest(ctx)
 	if err != nil {
 		return nil, err
 	}

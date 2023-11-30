@@ -178,6 +178,24 @@ func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.Pro
 				Handler: EventHandler.FilterEventByDate,
 				Roles:   allRoles,
 			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/cheapest",
+				Handler: EventHandler.SortEventByCheapest,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/expensive",
+				Handler: EventHandler.SortEventByExpensive,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/newest",
+				Handler: EventHandler.SortEventByNewest,
+				Roles:   allRoles,
+			},
 		},
 	}
 
