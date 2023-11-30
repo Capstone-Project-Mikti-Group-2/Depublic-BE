@@ -25,16 +25,12 @@ func (r *ProfileRepository) CreateProfile(ctx context.Context, profile *entity.P
 }
 
 func (r *ProfileRepository) UpdateProfile(ctx context.Context, profile *entity.Profile) error {
-	query := r.db.WithContext(ctx).Model(profile).Where("id = ?", profile.ID)
-	if profile.Address != "" {
-		query = query.Update("address", profile.Address)
+	query := r.db.WithContext(ctx).Model(profile).Where("id = ?", profile.ID).Updates(profile)
+
+	if query.Error != nil {
+		return query.Error
 	}
-	if profile.Avatar != nil {
-		query = query.Update("avatar", profile.Avatar)
-	}
-	if err := query.Error; err != nil {
-		return err
-	}
+
 	return nil
 }
 

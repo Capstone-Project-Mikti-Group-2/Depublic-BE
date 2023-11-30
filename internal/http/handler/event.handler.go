@@ -65,7 +65,7 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 
 func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 	var input struct {
-		ID          int64  `json:"id"`
+		ID          int64  `param:"id"`
 		Name        string `json:"name"`
 		Description string `json:"description"`
 		Location    string `json:"location"`
@@ -91,8 +91,8 @@ func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"end_date": "invalid date format"})
 	}
 
-	event := entity.NewEvent(0, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
-	err = h.eventService.CreateEvent(ctx.Request().Context(), event)
+	event := entity.UpdateEvent(input.ID, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
+	err = h.eventService.UpdateEvent(ctx.Request().Context(), event)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}
@@ -151,7 +151,7 @@ func (h *EventHandler) FindAllEvent(ctx echo.Context) error {
 
 func (h *EventHandler) DeleteEvent(ctx echo.Context) error {
 	var input struct {
-		ID int64 `json:"id" validate:"required"`
+		ID int64 `param:"id" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -268,6 +268,57 @@ func (h *EventHandler) FilterEventByAvailable(ctx echo.Context) error {
 	}
 
 	event, err := h.eventService.FilterEventByAvailable(ctx.Request().Context(), input.Available)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
+	})
+}
+
+func (h *EventHandler) SortEventByExpensive(ctx echo.Context) error {
+	sort := ctx.QueryParam("sort")
+
+	if sort != "termahal" {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid sort order"})
+	}
+
+	event, err := h.eventService.SortEventByExpensive(ctx.Request().Context())
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
+	})
+}
+
+func (h *EventHandler) SortEventByCheapest(ctx echo.Context) error {
+	sort := ctx.QueryParam("sort")
+
+	if sort != "termurah" {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid sort order"})
+	}
+
+	event, err := h.eventService.SortEventByCheapest(ctx.Request().Context())
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data": event,
+	})
+}
+
+func (h *EventHandler) SortEventByNewest(ctx echo.Context) error {
+	sort := ctx.QueryParam("sort")
+
+	if sort != "terbaru" {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid sort order"})
+	}
+
+	event, err := h.eventService.SortEventByNewest(ctx.Request().Context())
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}

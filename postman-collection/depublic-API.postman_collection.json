@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"user3\",\r\n    \"email\": \"user3@gmail.com\",\r\n    \"password\": \"User1234\",\r\n    \"number\": \"082187181012\",\r\n    \"role\" : \"Administrator\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"\", //name (string)\r\n    \"email\": \"\", //email (must email example@mail.com\"\r\n    \"password\": \"\", //password\r\n    \"number\": \"\", //number\r\n    \"role\" : \"\" //role (role must be Administrator or User\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,7 +61,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user1@gmail.com\",\r\n    \"password\": \"User1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user1@gmail.com\", //email (must email example@mail.com\"\r\n    \"password\": \"User1234\" //password\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,7 +96,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIiLCJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiZXhwIjoxNzAxMTgyOTMzfQ.1ikfoAgpoj6y0DrAfo5pArm2U9jsruzFvopglxLZ1Fw",
 									"type": "string"
 								}
 							]
@@ -127,7 +127,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIiLCJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiZXhwIjoxNzAxMTgyOTMzfQ.1ikfoAgpoj6y0DrAfo5pArm2U9jsruzFvopglxLZ1Fw",
 									"type": "string"
 								}
 							]
@@ -150,7 +150,8 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "1",
+									"description": "integer"
 								}
 							]
 						}
@@ -174,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"user2\",\r\n    \"email\": \"user2@gmail.com\",\r\n    \"password\": \"User1234\",\r\n    \"number\": \"082187182012\",\r\n    \"role\" : \"User\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"\", //name (string)\r\n    \"email\": \"\", //email (must email example@mail.com\"\r\n    \"password\": \"\", //password\r\n    \"number\": \"\", //number\r\n    \"role\" : \"\" //role (role must be Administrator or User\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -441,7 +442,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTM1OTgzMX0.Wmxy2slG7pDJnN4IDbAY45fxHYi7U2bYZo95pPbnZCw",
 									"type": "string"
 								}
 							]
@@ -479,7 +480,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "2"
 								}
 							]
 						}
@@ -487,7 +488,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete Profile By ID",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -518,6 +519,441 @@
 									"key": "id",
 									"value": ""
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Handler",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sholawat Bersama Habib Alil Maulana\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Kalimasada\",\r\n    \"price\": 10000,\r\n    \"quantity\": 100,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-01\",\r\n    \"end_date\": \"2023-05-05\",\r\n    \"available\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTM2MDcwNn0.UjLHuQAxlhyiNiJlYRgvJrb1f683XQ3-cfSC5gHKuEk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sholawat Bersama\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Brebes\",\r\n    \"price\": 1000,\r\n    \"quantity\": 500,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-05\",\r\n    \"end_date\": \"2023-01-05\",\r\n    \"available\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/events/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/events/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/events/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Event By Price",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2NzE2N30.Oo4yRC4wx6BYtt_sR6DU7yAx61QlHf_ZiCB44Pzm2C4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/events/price/:min/:max",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"price",
+								":min",
+								":max"
+							],
+							"variable": [
+								{
+									"key": "min",
+									"value": "5000"
+								},
+								{
+									"key": "max",
+									"value": "500000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Event By Date",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI3NjgwMX0.Ahd8Imm1phSNvJvy2xKKm9IHClqICkkpeE1cGKV_8x4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/events/date/:start_date/:end_date",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"date",
+								":start_date",
+								":end_date"
+							],
+							"variable": [
+								{
+									"key": "start_date",
+									"value": "2021-01-21"
+								},
+								{
+									"key": "end_date",
+									"value": "2023-01-23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Event Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/events/keyword/:keyword",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"keyword",
+								":keyword"
+							],
+							"variable": [
+								{
+									"key": "keyword",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Event By Availableity",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Event By Location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTMyNDc1NX0.PMc997gY5tE8hFQ4Bib3nj3N1tfXUCZENYkYIXuYk-c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/events/location/:location",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"location",
+								":location"
+							],
+							"variable": [
+								{
+									"key": "location",
+									"value": "Kalimasada"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort Event By Expensive",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI3NjgwMX0.Ahd8Imm1phSNvJvy2xKKm9IHClqICkkpeE1cGKV_8x4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/expensive/:expensive",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"expensive",
+								":expensive"
+							],
+							"variable": [
+								{
+									"key": "expensive",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort Event By Cheapest",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"events"
 							]
 						}
 					},
