@@ -11,6 +11,7 @@ type User struct {
 	Number    string    `json:"number"`
 	Password  string    `json:"-"`
 	Role      string    `json:"role"`
+	Saldo     int64     `json:"saldo"`
 	Profile   *Profile  `json:"profile"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -29,13 +30,14 @@ func NewUser(name, email, number, password, role string) *User {
 	}
 }
 
-func UpdateUser(id int64, name, email, number, password, role string) *User {
+func UpdateUser(id int64, name, email, number, password, role string, saldo int64) *User {
 	return &User{
 		ID:        id,
 		Name:      name,
 		Email:     email,
 		Number:    number,
 		Role:      role,
+		Saldo:     saldo,
 		Password:  password,
 		UpdatedAt: time.Now(),
 	}
