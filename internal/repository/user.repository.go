@@ -43,6 +43,9 @@ func (r *UserRepository) UpdateUser(ctx context.Context, user *entity.User) erro
 	if user.Role != "" {
 		query = query.Update("role", user.Role)
 	}
+	if user.Saldo != 0 {
+		query = query.Update("saldo", user.Saldo)
+	}
 	if err := query.Error; err != nil {
 		return err
 	}

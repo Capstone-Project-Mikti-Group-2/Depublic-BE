@@ -24,7 +24,6 @@ func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 		EventID  int64 `json:"event_id" validate:"required"`
 		UserID   int64 `json:"user_id" validate:"required"`
 		Quantity int64 `json:"quantity" validate:"required"`
-		IsPaid   bool  `json:"is_paid" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -45,7 +44,7 @@ func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 		return ctx.JSON(http.StatusUnprocessableEntity, "insufficient balance")
 	}
 
-	ticket := entity.NewTicket(input.EventID, input.UserID, input.Quantity, input.IsPaid)
+	ticket := entity.NewTicket(input.EventID, input.UserID, input.Quantity)
 	err = h.ticketService.CreateTicket(ctx.Request().Context(), ticket)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)

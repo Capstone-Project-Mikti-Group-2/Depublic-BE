@@ -19,12 +19,11 @@ type Ticket struct {
 	User      User       `json:"user"`
 }
 
-func NewTicket(eventID, quantity, userID int64, isPaid bool) *Ticket {
+func NewTicket(eventID, quantity, userID int64) *Ticket {
 	return &Ticket{
 		EventID:   eventID,
 		Quantity:  quantity,
 		UserID:    userID,
-		IsPaid:    isPaid,
 		CreatedAt: time.Now(),
 	}
 }

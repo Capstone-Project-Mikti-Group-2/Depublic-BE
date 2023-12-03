@@ -198,10 +198,22 @@ func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.Pro
 			},
 		},
 		{
-			{
+			{ //ticket Routes
 				Method:  echo.POST,
 				Path:    "/tickets",
 				Handler: TicketHandler.CreateTicket,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/tickets",
+				Handler: TicketHandler.GetAllticket,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/tickets/:user_id",
+				Handler: TicketHandler.GetTicketByUserID,
 				Roles:   allRoles,
 			},
 		},

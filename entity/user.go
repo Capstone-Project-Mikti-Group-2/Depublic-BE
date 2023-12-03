@@ -18,13 +18,14 @@ type User struct {
 	DeletedAt time.Time `json:"deletedAt"`
 }
 
-func NewUser(name, email, number, password, role string) *User {
+func NewUser(name, email, number, password, role string, saldo int64) *User {
 	return &User{
 		Name:      name,
 		Email:     email,
 		Password:  password,
 		Number:    number,
 		Role:      role,
+		Saldo:     saldo,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
