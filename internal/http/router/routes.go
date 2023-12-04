@@ -37,7 +37,7 @@ func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
 	}
 }
 
-func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler) []*Route {
+func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler, TicketHandler *handler.TicketHandler) []*Route {
 	allRoutes := []*Route{}
 
 	routeSlices := [][]*Route{
@@ -194,6 +194,26 @@ func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.Pro
 				Method:  echo.GET,
 				Path:    "/events/newest",
 				Handler: EventHandler.SortEventByNewest,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{ //ticket Routes
+				Method:  echo.POST,
+				Path:    "/tickets",
+				Handler: TicketHandler.CreateTicket,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/tickets",
+				Handler: TicketHandler.GetAllticket,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/tickets/:user_id",
+				Handler: TicketHandler.GetTicketByUserID,
 				Roles:   allRoles,
 			},
 		},

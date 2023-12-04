@@ -30,13 +30,14 @@ func (h *UserHandler) CreateUser(ctx echo.Context) error {
 		Number   string `json:"number" validate:"required"`
 		Password string `json:"password" validate:"required"`
 		Role     string `json:"role" validate:"oneof=Administrator User"`
+		Saldo    int64  `json:"saldo"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	user := entity.NewUser(input.Name, input.Email, input.Number, input.Password, input.Role)
+	user := entity.NewUser(input.Name, input.Email, input.Number, input.Password, input.Role, input.Saldo)
 	err := h.userService.CreateUser(ctx.Request().Context(), user)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -56,12 +57,13 @@ func (h *UserHandler) UpdateUser(ctx echo.Context) error {
 		Number   string `json:"number"`
 		Password string `json:"password"`
 		Role     string `json:"role" validate:"oneof=Administrator User"`
+		Saldo    int64  `json:"saldo"`
 	}
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	user := entity.UpdateUser(input.ID, input.Name, input.Email, input.Number, input.Password, input.Role)
+	user := entity.UpdateUser(input.ID, input.Name, input.Email, input.Number, input.Password, input.Role, input.Saldo)
 
 	err := h.userService.UpdateUser(ctx.Request().Context(), user)
 	if err != nil {
