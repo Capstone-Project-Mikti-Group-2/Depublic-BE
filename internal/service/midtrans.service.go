@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/midtrans/midtrans-go"
@@ -17,7 +16,12 @@ type MidtransService struct {
 	midtransConfig 	config.Midtrans
 }
 
-func NewMidtransService(cnf *config.Config) common.MidtransService {
+type MidtransUseCase interface {
+	GenerateSnapURL(ctx context.Context, topup *entity.TopUp) error
+	VerifyPayment(ctx context.Context, data map[string]interface{}) (bool,error)
+}
+
+func NewMidtransService(cnf *config.Config) MidtransUseCase {
 	var client snap.Client
 	envi := midtrans.Sandbox
 	if cnf.Midtrans.IsProd {
