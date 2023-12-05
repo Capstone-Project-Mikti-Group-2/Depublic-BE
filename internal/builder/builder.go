@@ -41,6 +41,11 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
 	ticketService := service.NewTicketService(ticketRepository)
 	ticketHandler := handler.NewTicketHandler(cfg, ticketService)
 
+	//create topup handler
+	topupRepository := repository.NewTopUpRepository(db)
+	topupService := service.NewTopupService(topupRepository)
+	topupHandler := handler.NewTopupHandler(cfg, topupService)
+
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, ticketHandler)
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, ticketHandler, topupHandler)
 }

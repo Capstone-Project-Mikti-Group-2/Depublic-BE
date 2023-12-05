@@ -15,7 +15,7 @@ type User struct {
 	Profile   *Profile  `json:"profile"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt time.Time `json:"deletedAt"`
+	DeletedAt time.Time `json:"deletedAt,omitempy"`
 }
 
 func NewUser(name, email, number, password, role string, saldo int64) *User {
