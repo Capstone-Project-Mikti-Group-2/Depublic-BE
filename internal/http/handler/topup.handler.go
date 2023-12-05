@@ -10,18 +10,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type topUpHandler struct {
+type TopUpHandler struct {
 	cfg				config.Config
 	topUpService 	service.TopUpUseCase
 }
 
 func NewTopUp(
-	cfg *config.Config,
-	topUpService service.TopUpUseCase) *topUpHandler {
-	return &topUpHandler{cfg, topUpService}
+	cfg config.Config,
+	topUpService service.TopUpUseCase) *TopUpHandler {
+	return &TopUpHandler{cfg, topUpService}
 }
 
-func (h *topUpHandler) InitializeTopUp(ctx echo.Context) error {
+func (h *TopUpHandler) InitializeTopUp(ctx echo.Context) error {
 	var input entity.TopUpRequest
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))

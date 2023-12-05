@@ -31,7 +31,7 @@ type PostgresConfig struct {
 
 // konfigurasi midtrans
 type Midtrans struct {
-	Key 	string 	`env:"SERVER_KEY"`
+	Server_Key 	string 	`env:"SERVER_KEY"`
 	IsProd	bool	`env:"MIDTRANS_ENV"`
 }
 

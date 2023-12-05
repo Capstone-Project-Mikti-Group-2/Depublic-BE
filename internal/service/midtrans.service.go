@@ -23,7 +23,7 @@ func NewMidtransService(cnf *config.Config) common.MidtransService {
 	if cnf.Midtrans.IsProd {
 		envi = midtrans.Production
 	}
-	client.New(cnf.Midtrans.Key, envi)
+	client.New(cnf.Midtrans.Server_Key, envi)
 
 	return &MidtransService{
 		client: client,
@@ -55,7 +55,7 @@ func (s *MidtransService) VerifyPayment(ctx context.Context, data map[string]int
 	if s.midtransConfig.IsProd {
 		envi = midtrans.Production
 	}
-	client.New(s.midtransConfig.Key, envi)
+	client.New(s.midtransConfig.Server_Key, envi)
 
 	// 3. Get order-id from payload
 	orderId, exists := data["order_id"].(string)

@@ -1,11 +1,11 @@
 package entity
 
 type TopUp struct {
-	ID      string  `db:"id"`
-	UserID  int64   `db:"user_id"`
-	Status  int8    `db:"status"`
-	Amount  float64 `db:"amount"`
-	SnapURL string  `db:"snap_url"`
+	ID      string  `json:"id"`
+	UserID  int64   `json:"user_id"`
+	Status  int8    `json:"status"`
+	Amount  float64 `json:"amount"`
+	SnapURL string  `json:"snap_url"`
 }
 
 type TopUpRequest struct {
