@@ -9,7 +9,7 @@ type Profile struct {
 	Avatar    []byte    `json:"avatar"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt time.Time `json:"deletedAt"`
+	DeletedAt time.Time `json:"deletedAt,omitempy"`
 }
 
 func NewProfile(userID int64, address string, avatar []byte) *Profile {

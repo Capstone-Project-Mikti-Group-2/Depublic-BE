@@ -37,7 +37,7 @@ func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
 	}
 }
 
-func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler, TicketHandler *handler.TicketHandler) []*Route {
+func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler, TicketHandler *handler.TicketHandler, TopupHandler *handler.TopupHandler) []*Route {
 	allRoutes := []*Route{}
 
 	routeSlices := [][]*Route{
@@ -214,6 +214,14 @@ func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.Pro
 				Method:  echo.GET,
 				Path:    "/tickets/:user_id",
 				Handler: TicketHandler.GetTicketByUserID,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{
+				Method:  echo.POST,
+				Path:    "/users/topup",
+				Handler: TopupHandler.UserTopup,
 				Roles:   allRoles,
 			},
 		},
