@@ -9,9 +9,10 @@ import (
 
 // konfigurasi aplikasi (port, database, jwt, session)
 type Config struct {
-	Port     string         `env:"PORT" envDefault:"8080"`
-	Postgres PostgresConfig `envPrefix:"POSTGRES_"`
-	JWT      JwtConfig      `envPrefix:"JWT_"`
+	Port           string         `env:"PORT" envDefault:"8080"`
+	Postgres       PostgresConfig `envPrefix:"POSTGRES_"`
+	JWT            JwtConfig      `envPrefix:"JWT_"`
+	MidtransConfig MidtransConfig `envPrefix:"MIDTRANS_"`
 }
 
 // konfigurasi untuk JWT
@@ -26,6 +27,14 @@ type PostgresConfig struct {
 	User     string `env:"USER" envDefault:"postgres"`
 	Password string `env:"PASSWORD" envDefault:"postgres"`
 	Database string `env:"DATABASE" envDefault:"depublic-db"`
+}
+
+// konfigurasi midtrans
+type MidtransConfig struct {
+	MidtransServerKey string `env:"SERVER_KEY"`
+	MidtransClientKey string `env:"CLIENT_KEY"`
+	BaseURL           string `env:"BASE_URL"`
+	MidtransEnv       string `env:"ENV"`
 }
 
 // NewConfig digunakan untuk membuat config baru

@@ -22,7 +22,10 @@ type Route struct {
 	Roles   []string
 }
 
-func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
+func PublicRoutes(
+	authHandler *handler.AuthHandler,
+	transcationHandler *handler.TransactionHandler,
+) []*Route {
 	return []*Route{
 		{
 			Method:  echo.POST,
@@ -34,10 +37,20 @@ func PublicRoutes(authHandler *handler.AuthHandler) []*Route {
 			Path:    "/register",
 			Handler: authHandler.Registration,
 		},
+		{
+			Method:  echo.POST,
+			Path:    "/transaction/webhook",
+			Handler: transcationHandler.WebHookTransaction,
+		},
 	}
 }
 
-func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.ProfileHandler, EventHandler *handler.EventHandler) []*Route {
+func PrivateRoutes(
+	UserHandler *handler.UserHandler,
+	ProfileHandler *handler.ProfileHandler,
+	EventHandler *handler.EventHandler,
+	TransactionHandler *handler.TransactionHandler,
+) []*Route {
 	allRoutes := []*Route{}
 
 	routeSlices := [][]*Route{
@@ -195,6 +208,17 @@ func PrivateRoutes(UserHandler *handler.UserHandler, ProfileHandler *handler.Pro
 				Path:    "/events/newest",
 				Handler: EventHandler.SortEventByNewest,
 				Roles:   allRoles,
+			},
+		},
+		{
+			{
+				Method:  echo.POST,
+				Path:    "/transactions",
+				Handler: TransactionHandler.CreateTransaction,
+				Roles:   allRoles,
+			},
+			{
+				
 			},
 		},
 	}
