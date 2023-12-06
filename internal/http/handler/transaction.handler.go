@@ -102,8 +102,6 @@ func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"data": map[string]interface{}{
 			"id":         transaction.ID,
-			"email":      transaction.Email,
-			"number":     transaction.Number,
 			"created_at": transaction.CreatedAt,
 			"updated_at": transaction.UpdatedAt,
 		},
