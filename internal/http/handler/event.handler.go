@@ -51,7 +51,7 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"end_date": "invalid date format"})
 	}
 
-	event := entity.NewEvent(0, input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
+	event := entity.NewEvent(input.Name, input.Description, input.Location, input.Price, input.Quantity, input.Available, input.Image, startDate, endDate)
 	err = h.eventService.CreateEvent(ctx.Request().Context(), event)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -130,8 +130,6 @@ func (h *EventHandler) FindEventByID(ctx echo.Context) error {
 			"start_date":  event.StartDate,
 			"end_date":    event.EndDate,
 			"available":   event.Available,
-			"created_at":  event.CreatedAt,
-			"updated_at":  event.UpdatedAt,
 		},
 	})
 }

@@ -15,7 +15,7 @@ type Event struct {
 	EndDate     time.Time `json:"end_date"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
-	DeletedAt   time.Time `json:"deletedAt"`
+	DeletedAt   time.Time `json:"deletedAt,omitempy"`
 }
 
 func UpdateEvent(id int64, name, description, location string, price, quantity int64, available bool, image []byte, startDate, endDate time.Time) *Event {
@@ -34,9 +34,8 @@ func UpdateEvent(id int64, name, description, location string, price, quantity i
 	}
 }
 
-func NewEvent(id int64, name, description, location string, price, quantity int64, available bool, image []byte, startDate time.Time, endDate time.Time) *Event {
+func NewEvent(name, description, location string, price, quantity int64, available bool, image []byte, startDate time.Time, endDate time.Time) *Event {
 	return &Event{
-		ID:          id,
 		Name:        name,
 		Description: description,
 		Location:    location,

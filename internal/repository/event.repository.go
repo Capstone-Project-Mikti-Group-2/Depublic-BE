@@ -60,6 +60,16 @@ func (r *EventRepository) FindEventByID(ctx context.Context, id int64) (*entity.
 	return event, nil
 }
 
+func (r *EventRepository) GetEvent(ctx context.Context, id int64) (*entity.Event, error) {
+	event := new(entity.Event)
+	result := r.db.WithContext(ctx).First(&event, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return event, nil
+}
+
 func (r *EventRepository) FilterEventByPrice(ctx context.Context, min, max string) ([]*entity.Event, error) {
 	events := make([]*entity.Event, 0)
 	err := r.db.WithContext(ctx).Where("price >= ? And price <= ?", min, max).Find(&events).Error

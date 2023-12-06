@@ -20,6 +20,12 @@ type JwtConfig struct {
 	SecretKey string `env:"SECRET_KEY"`
 }
 
+type MidtransConfig struct {
+	ClientKey    string `env:"CLIENT_KEY"`
+	ServerKey    string `env:"SERVER_KEY"`
+	IsProduction bool   `env:"IS_PRODUCTION"`
+}
+
 // konfigurasi database
 type PostgresConfig struct {
 	Host     string `env:"HOST" envDefault:"localhost"`
@@ -46,14 +52,6 @@ func NewConfig(envPath string) (*Config, error) {
 	return cfg, nil
 }
 
-// parseConfig parses the configuration file located at envPath and returns a
-// Config struct and an error if any. It uses the godotenv package to load the
-// environment variables from the file and the env package to parse them into
-// the Config struct.
-//
-// envPath: The path to the environment file.
-// Returns: A pointer to the Config struct and an error.
-
 func parseConfig(envPath string) (*Config, error) {
 	err := godotenv.Load(envPath)
 	if err != nil {
@@ -67,6 +65,3 @@ func parseConfig(envPath string) (*Config, error) {
 	}
 	return cfg, nil
 }
-
-//Note
-//direktori config digunakan untuk konfigurasi database, jwt, dan port
