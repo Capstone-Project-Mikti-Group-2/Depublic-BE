@@ -14,6 +14,8 @@ import (
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
+	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/snap"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -27,8 +29,10 @@ func main() {
 	db, err := buildGormDB(cfg.Postgres)
 	checkError(err)
 
-	publicRoutes := builder.BuildPublicRoutes(cfg, db)
-	privateRoutes := builder.BuildPrivateRoutes(cfg, db)
+	midtransClient := initMidtrans(cfg)
+
+	publicRoutes := builder.BuildPublicRoutes(cfg, db, midtransClient)
+	privateRoutes := builder.BuildPrivateRoutes(cfg, db, midtransClient)
 
 	echoBinder := &echo.DefaultBinder{}
 	formValidator := validator.NewFormValidator()
@@ -78,4 +82,16 @@ func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func initMidtrans(cfg *config.Config) snap.Client {
+	snapClient := snap.Client{}
+
+	if cfg.MidtransConfig.MidtransEnv == "development" {
+		snapClient.New(cfg.MidtransConfig.MidtransServerKey, midtrans.Sandbox)
+	} else {
+		snapClient.New(cfg.MidtransConfig.MidtransServerKey, midtrans.Production)
+	}
+
+	return snapClient
 }

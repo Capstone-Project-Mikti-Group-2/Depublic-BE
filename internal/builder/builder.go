@@ -6,10 +6,12 @@ import (
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/router"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/repository"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
+	"github.com/midtrans/midtrans-go/snap"
 	"gorm.io/gorm"
 )
 
-func BuildPublicRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
+func BuildPublicRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Client) []*router.Route {
+	//registration, user, login, auth
 	registrationRepository := repository.NewRegistrationRepository(db)
 	registrationService := service.NewRegistrationService(registrationRepository)
 	userRepository := repository.NewUserRepository(db)
@@ -17,10 +19,18 @@ func BuildPublicRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
 	tokenService := service.NewTokenService(cfg)
 	authHandler := handler.NewAuthHandler(registrationService, loginService, tokenService)
 
-	return router.PublicRoutes(authHandler)
+	//create payment
+	paymentService := service.NewPaymentService(midtransClient)
+
+	//Create transaction handler
+	transactionRepository := repository.NewTransactionRepository(db)
+	transactionService := service.NewTransactionService(transactionRepository)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+
+	return router.PublicRoutes(authHandler, transactionHandler)
 }
 
-func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
+func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Client) []*router.Route {
 	//Create user handler
 	userRepository := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)
@@ -36,16 +46,15 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB) []*router.Route {
 	eventService := service.NewEventService(eventRepository)
 	eventHandler := handler.NewEventHandler(cfg, eventService)
 
-	//create ticket handler
-	ticketRepository := repository.NewTicketRepository(db)
-	ticketService := service.NewTicketService(ticketRepository)
-	ticketHandler := handler.NewTicketHandler(cfg, ticketService)
+	//create payment
+	paymentService := service.NewPaymentService(midtransClient)
 
-	//create topup handler
-	topupRepository := repository.NewTopUpRepository(db)
-	topupService := service.NewTopupService(topupRepository)
-	topupHandler := handler.NewTopupHandler(cfg, topupService)
+	//Create transaction handler
+	transactionRepository := repository.NewTransactionRepository(db)
+	transactionService := service.NewTransactionService(transactionRepository)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+
 
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, ticketHandler, topupHandler)
-}
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler)
+
