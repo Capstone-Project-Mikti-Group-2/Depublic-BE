@@ -24,7 +24,7 @@ func NewTransactionHandler(transactionService service.TransactionUseCase, paymen
 	}
 }
 
-func(h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
+func (h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
 	var input struct {
 		OrderID string `json:"order_id" validate:"required"`
 		Amount  int64  `json:"amount" validate:"required"`
@@ -92,19 +92,24 @@ func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
 		})
 	}
 
-	transaction, err := h.transactionService.FindByUserID(ctx.Request().Context(), id)
+	users, err := h.transactionService.FindByUserID(ctx.Request().Context(), id)
 	if err != nil {
-		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
-			"error": err.Error(),
-		})
+		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
 
+	var responseData []map[string]interface{}
+	for _, user := range users {
+		responseData = append(responseData, map[string]interface{}{
+			"id":         user.ID,
+			"user_id":    user.UserID,
+			"order_id":   user.OrderID,
+			"amount":     user.Amount,
+			"status":     user.Status,
+			"created_at": user.CreatedAt,
+			"updated_at": user.UpdatedAt,
+		})
+	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"data": map[string]interface{}{
-			"id":         transaction.ID,
-			"created_at": transaction.CreatedAt,
-			"updated_at": transaction.UpdatedAt,
-		},
+		"data": responseData,
 	})
-
 }
