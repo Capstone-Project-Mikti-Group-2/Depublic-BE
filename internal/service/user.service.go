@@ -21,6 +21,8 @@ type UserUseCase interface {
 	UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error
 	DeleteAccount(ctx context.Context, email string) error
 	UpdateSelfUser(ctx context.Context, user *entity.User) error
+	InputSaldo(ctx context.Context, user *entity.User) error
+	Logout(ctx context.Context, user *entity.User) error
 }
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *entity.User) error
@@ -35,6 +37,8 @@ type UserRepository interface {
 	UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error
 	DeleteAccount(ctx context.Context, email string) error
 	UpdateSelfUser(ctx context.Context, user *entity.User) error
+	InputSaldo(ctx context.Context, user *entity.User) error
+	Logout(ctx context.Context, user *entity.User) error
 }
 
 type UserService struct {
@@ -110,4 +114,12 @@ func (s *UserService) DeleteAccount(ctx context.Context, email string) error {
 
 func (s *UserService) UpdateSelfUser(ctx context.Context, user *entity.User) error {
 	return s.repository.UpdateSelfUser(ctx, user)
+}
+
+func (s *UserService) InputSaldo(ctx context.Context, user *entity.User) error {
+	return s.repository.InputSaldo(ctx, user)
+}
+
+func (s *UserService) Logout(ctx context.Context, user *entity.User) error {
+	return s.repository.Logout(ctx, user)
 }

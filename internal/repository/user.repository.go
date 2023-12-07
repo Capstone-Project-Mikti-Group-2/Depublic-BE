@@ -149,3 +149,19 @@ func (r *UserRepository) UpdateSelfUser(ctx context.Context, user *entity.User) 
 
 	return nil
 }
+
+func (r *UserRepository) Logout(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) InputSaldo(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

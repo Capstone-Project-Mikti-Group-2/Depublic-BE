@@ -293,3 +293,83 @@ func (h *UserHandler) UpdateSelfUser(ctx echo.Context) error {
 		"message": "success update user",
 	})
 }
+
+func (h *UserHandler) Logout(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	user := &entity.User{
+		ID: userID,
+	}
+
+	err := h.userService.Logout(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": "unable to logout",
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success logout",
+	})
+}
+
+func (h *UserHandler) InputSaldo(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	user, err := h.userService.FindByID(ctx.Request().Context(), userID)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	var input struct {
+		Saldo int64 `json:"saldo"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	updateSaldo := user.Saldo + input.Saldo
+
+	user.Saldo = updateSaldo
+	err = h.userService.InputSaldo(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success input saldo",
+	})
+}

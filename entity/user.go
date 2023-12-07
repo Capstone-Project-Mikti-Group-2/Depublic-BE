@@ -27,7 +27,6 @@ func NewUser(name, email, number, password, role string, saldo int64) *User {
 		Role:      role,
 		Saldo:     saldo,
 		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
 	}
 }
 
@@ -76,5 +75,18 @@ func UpdateSelfUser(id int64, name, email, number, password string) *User {
 func DeleteSelfUserByEmail(email string) *User {
 	return &User{
 		Email: email,
+	}
+}
+
+func Logout(id int64) *User {
+	return &User{
+		ID: id,
+	}
+}
+
+func InputSaldo(id int64, saldo int64) *User {
+	return &User{
+		ID:    id,
+		Saldo: saldo,
 	}
 }
