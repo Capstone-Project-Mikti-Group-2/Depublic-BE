@@ -49,7 +49,7 @@ func PrivateRoutes(
 	UserHandler *handler.UserHandler,
 	ProfileHandler *handler.ProfileHandler,
 	EventHandler *handler.EventHandler,
-	TransactionHandler *handler.TransactionHandler,
+	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler,
 ) []*Route {
 	allRoutes := []*Route{}
 
@@ -236,14 +236,14 @@ func PrivateRoutes(
 				Roles:   allRoles,
 			},
 		},
-		{
-			{
-				Method:  echo.POST,
-				Path:    "/users/topup",
-				Handler: TopupHandler.UserTopup,
-				Roles:   allRoles,
-			},
-		},
+		// {
+		// 	{
+		// 		Method:  echo.POST,
+		// 		Path:    "/users/topup",
+		// 		Handler: TopupHandler.UserTopup,
+		// 		Roles:   allRoles,
+		// 	},
+		// },
 	}
 
 	for _, routes := range routeSlices {

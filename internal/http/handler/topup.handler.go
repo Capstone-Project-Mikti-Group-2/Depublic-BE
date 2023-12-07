@@ -10,86 +10,85 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type TopupHandler struct {
+type TopUpHandler struct {
 	cfg          *config.Config
-	topupService service.TopupUseCase
+	topupService service.TopupService
 }
 
-func NewTopupHandler(cfg *config.Config, topupService service.TopupUseCase) *TopupHandler {
-	return &TopupHandler{
+func NewTopUpHandler(cfg *config.Config, topupService service.TopupService) *TopUpHandler {
+	return &TopUpHandler{
 		cfg:          cfg,
 		topupService: topupService,
 	}
 }
 
-func (h *TopupHandler) CreateTopup(c echo.Context) error {
+func (h *TopUpHandler) CreateTopup(c echo.Context) error {
 	var topup entity.TopUp
 	if err := c.Bind(&topup); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
-	ChargeResponse, err := h.topupService.CreateMidtransTopup(c.Request().Context(), topup.ID, int64(topup.Nominal)) // nominal diubah ke int64
+	ChargeResponse, err := h.topupService.CreateMidtransCharge(topup.ID, int64(topup.Amount))
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
 	topup.SnapURL = ChargeResponse.RedirectURL
 
-	newtopup, err := h.topupService.CreateTopUp(c.Request().Context(), topup)
+	newTopup, err := h.topupService.CreateTopup(c.Request().Context(), topup)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusCreated, newtopup)
+	return c.JSON(http.StatusCreated, newTopup)
 }
 
-func (h *TopupHandler) UserTopup(c echo.Context) error {
+func (h *TopUpHandler) UserTopup(c echo.Context) error {
 	token, ok := c.Get("user").(*jwt.Token)
 	if !ok {
-		return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+		return c.JSON(http.StatusUnauthorized, echo.Map{
 			"message": "unauthorized",
 		})
 	}
 
-	claims := token.Claims.(jwt.MapClaims)
+	claims, ok := token.Claims.(jwt.MapClaims)
+
 	if !ok {
-		return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-			"message": "invalid token",
+		return c.JSON(http.StatusUnauthorized, echo.Map{
+			"message": "unauthorized",
 		})
 	}
 
-	userID := int64(claims["user_id"].(float64))
-
+	userID := int(claims["id"].(float64))
 	var topup entity.TopUp
 	if err := c.Bind(&topup); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
-	userSaldo, err := h.topupService.UpdateUserSaldo(c.Request().Context(), topup.Nominal, userID)
+	userSaldo, err := h.topupService.UpdateUserSaldo(c.Request().Context(), userID, int64(topup.Amount))
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
-	newTopup, err := h.topupService.UserTopup(c.Request().Context(), topup, userID)
+	newTopup, err := h.topupService.UserTopup(c.Request().Context(), userID, topup)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"message": "topup success",
-		"topup":   newTopup,
-		"user":    userSaldo,
+	return c.JSON(http.StatusCreated, echo.Map{
+		"new_topup": newTopup,
+		"new_saldo": userSaldo,
 	})
 }

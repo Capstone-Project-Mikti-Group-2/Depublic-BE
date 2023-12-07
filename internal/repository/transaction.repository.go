@@ -26,7 +26,7 @@ func (r *TransactionReposiotry) Create(ctx context.Context, transaction *entity.
 
 func (r *TransactionReposiotry) FindByOrderID(ctx context.Context, orderID string) (*entity.Transaction, error) {
 	transaction := new(entity.Transaction)
-	err := r.db.WithContext(ctx).Where("id = ?", orderID).First(&transaction).Error
+	err := r.db.WithContext(ctx).Where("order_id = ?", orderID).First(&transaction).Error
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (r *TransactionReposiotry) FindByOrderID(ctx context.Context, orderID strin
 
 func (r *TransactionReposiotry) FindByUserID(ctx context.Context, userID int64) ([]*entity.Transaction, error) {
 	transaction := make([]*entity.Transaction, 0)
-	err := r.db.WithContext(ctx).Where("id = ?", userID).Find(&transaction).Error
+	err := r.db.WithContext(ctx).Where("user_id = ?", userID).Find(&transaction).Error
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (r *TransactionReposiotry) FindByUserID(ctx context.Context, userID int64) 
 }
 
 func (r *TransactionReposiotry) UpdateStatus(ctx context.Context, orderID string, status string) error {
-	err := r.db.WithContext(ctx).Model(&entity.Transaction{}).Where("id = ?", orderID).Update("status", status).Error
+	err := r.db.WithContext(ctx).Model(&entity.Transaction{}).Where("order_id = ?", orderID).Update("status", status).Error
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
 BEGIN;
 
 
-DROP TABLE IF EXISTS "public"."transaction";
+DROP TABLE IF EXISTS "public"."transactions";
 
 
 COMMIT;
