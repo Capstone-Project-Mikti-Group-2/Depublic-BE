@@ -10,12 +10,18 @@ import (
 type TopupRepository interface {
 	InputTopup(ctx context.Context, topup entity.TopUp) (entity.TopUp, error)
 	UserTopup(ctx context.Context, topup entity.TopUp) (entity.TopUp, error)
-	GetUserByID(ctx context.Context, id int64) (*entity.User, error)
+	GetUserByID(ctx context.Context, id int) (*entity.User, error)
 	UpdateUser(ctx context.Context, user *entity.User) error
 }
 
 type topupRepository struct {
 	db *gorm.DB
+}
+
+func NewTopupRepository(db *gorm.DB) *topupRepository {
+	return &topupRepository{
+		db: db,
+	}
 }
 
 func (r *topupRepository) InputTopup(ctx context.Context, topup entity.TopUp) (entity.TopUp, error) {
@@ -27,7 +33,7 @@ func (r *topupRepository) InputTopup(ctx context.Context, topup entity.TopUp) (e
 	return topup, nil
 }
 
-func (r *topupRepository) GetUserByID(ctx context.Context, id int64) (*entity.User, error) {
+func (r *topupRepository) GetUserByID(ctx context.Context, id int) (*entity.User, error) {
 	user := new(entity.User)
 	result := r.db.WithContext(ctx).First(&user, id)
 	if result.Error != nil {

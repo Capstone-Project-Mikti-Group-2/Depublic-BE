@@ -53,7 +53,7 @@ func (h *TopUpHandler) UserTopup(c echo.Context) error {
 	token, ok := c.Get("user").(*jwt.Token)
 	if !ok {
 		return c.JSON(http.StatusUnauthorized, echo.Map{
-			"message": "unauthorized",
+			"message": "jwt token not found",
 		})
 	}
 
@@ -61,11 +61,12 @@ func (h *TopUpHandler) UserTopup(c echo.Context) error {
 
 	if !ok {
 		return c.JSON(http.StatusUnauthorized, echo.Map{
-			"message": "unauthorized",
+			"message": "invalid token claims",
 		})
 	}
 
-	userID := int(claims["id"].(float64))
+	userID := int(claims["user_id"].(float64))
+
 	var topup entity.TopUp
 	if err := c.Bind(&topup); err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{
@@ -88,7 +89,7 @@ func (h *TopUpHandler) UserTopup(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, echo.Map{
-		"new_topup": newTopup,
-		"new_saldo": userSaldo,
+		"user_saldo": userSaldo,
+		"topup":      newTopup,
 	})
 }

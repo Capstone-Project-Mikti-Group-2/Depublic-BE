@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"os"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
@@ -45,13 +44,8 @@ func (s *topupService) CreateTopup(ctx context.Context, topup entity.TopUp) (ent
 }
 
 func (s *topupService) CreateMidtransCharge(order_id string, amount int64) (*coreapi.ChargeResponse, error) {
-	serverKey := os.Getenv("MIDTRANS_SERVER_KEY")
-	clientKey := os.Getenv("MIDTRANS_CLIENT_KEY")
-
-	c := &coreapi.Client{
-		ServerKey: serverKey,
-		ClientKey: clientKey, // Set the Client Key here
-	}
+	c := coreapi.Client{}
+	c.New("SB-Mid-server-MekbYm9j66D6YG5Wv67xK75R", midtrans.Sandbox)
 
 	chargeReq := &coreapi.ChargeReq{
 		PaymentType: coreapi.PaymentTypeBankTransfer,
@@ -65,7 +59,7 @@ func (s *topupService) CreateMidtransCharge(order_id string, amount int64) (*cor
 }
 
 func (s *topupService) UpdateUserSaldo(ctx context.Context, userID int, amount int64) (int64, error) {
-	user, err := s.topupRepository.GetUserByID(ctx, int64(userID))
+	user, err := s.topupRepository.GetUserByID(ctx, int(userID))
 	if err != nil {
 		return 0, err
 	}
@@ -77,4 +71,8 @@ func (s *topupService) UpdateUserSaldo(ctx context.Context, userID int, amount i
 	}
 
 	return user.Saldo, nil
+}
+
+func (s *topupService) UserTopup(ctx context.Context, userID int, topup entity.TopUp) (entity.TopUp, error) {
+	return s.topupRepository.UserTopup(ctx, topup)
 }

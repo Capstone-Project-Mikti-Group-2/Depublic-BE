@@ -45,12 +45,12 @@ func NewServer(
 	return &Server{e}
 }
 
-func JWTProtected(SecretKey string) echo.MiddlewareFunc {
+func JWTProtected(secretKey string) echo.MiddlewareFunc {
 	return echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(common.JwtCustomClaims)
 		},
-		SigningKey: []byte(SecretKey),
+		SigningKey: []byte(secretKey),
 	})
 }
 

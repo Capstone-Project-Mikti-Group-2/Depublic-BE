@@ -15,9 +15,10 @@ type Transaction struct {
 
 func NewTransaction(orderID string, userID int64, amount int64, status string) *Transaction {
 	return &Transaction{
-		OrderID: orderID,
-		UserID:  userID,
-		Amount:  amount,
-		Status:  status,
+		OrderID:   orderID,
+		UserID:    userID,
+		Amount:    amount,
+		Status:    status,
+		CreatedAt: time.Now(),
 	}
 }

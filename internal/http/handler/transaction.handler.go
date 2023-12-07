@@ -15,12 +15,14 @@ import (
 type TransactionHandler struct {
 	transactionService service.TransactionUseCase
 	paymentService     service.PaymentUseCase
+	userService        service.UserUseCase
 }
 
-func NewTransactionHandler(transactionService service.TransactionUseCase, paymentService service.PaymentUseCase) *TransactionHandler {
+func NewTransactionHandler(transactionService service.TransactionUseCase, paymentService service.PaymentUseCase, userService service.UserUseCase) *TransactionHandler {
 	return &TransactionHandler{
 		transactionService: transactionService,
 		paymentService:     paymentService,
+		userService:        userService,
 	}
 }
 
@@ -76,6 +78,17 @@ func (h *TransactionHandler) WebHookTransaction(ctx echo.Context) error {
 
 	err = h.transactionService.UpdateStatus(ctx.Request().Context(), transaction.OrderID, status)
 
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
+	}
+
+	user, err := h.userService.FindByID(ctx.Request().Context(), transaction.UserID)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
+	}
+
+	updatedSaldo := user.Saldo + transaction.Amount
+	err = h.userService.UpdateSaldo(ctx.Request().Context(), user.ID, updatedSaldo)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
 	}

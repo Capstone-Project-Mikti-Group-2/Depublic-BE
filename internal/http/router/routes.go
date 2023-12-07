@@ -24,7 +24,7 @@ type Route struct {
 
 func PublicRoutes(
 	authHandler *handler.AuthHandler,
-	transcationHandler *handler.TransactionHandler,
+	TranscationHandler *handler.TransactionHandler,
 ) []*Route {
 	return []*Route{
 		{
@@ -40,7 +40,7 @@ func PublicRoutes(
 		{
 			Method:  echo.POST,
 			Path:    "/transaction/webhook",
-			Handler: transcationHandler.WebHookTransaction,
+			Handler: TranscationHandler.WebHookTransaction,
 		},
 	}
 }
@@ -49,7 +49,7 @@ func PrivateRoutes(
 	UserHandler *handler.UserHandler,
 	ProfileHandler *handler.ProfileHandler,
 	EventHandler *handler.EventHandler,
-	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler,
+	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, TopUpHandler *handler.TopUpHandler,
 ) []*Route {
 	allRoutes := []*Route{}
 
@@ -65,6 +65,24 @@ func PrivateRoutes(
 				Method:  echo.PUT,
 				Path:    "/users/:id",
 				Handler: UserHandler.UpdateUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/users/profile/:id",
+				Handler: UserHandler.UpdateSelfUser,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/users",
+				Handler: UserHandler.DeleteUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/users/profile/:id",
+				Handler: UserHandler.DeleteAccount,
 				Roles:   allRoles,
 			},
 			{
@@ -236,14 +254,28 @@ func PrivateRoutes(
 				Roles:   allRoles,
 			},
 		},
-		// {
-		// 	{
-		// 		Method:  echo.POST,
-		// 		Path:    "/users/topup",
-		// 		Handler: TopupHandler.UserTopup,
-		// 		Roles:   allRoles,
-		// 	},
-		// },
+		{
+			{ //topup Routes
+				Method:  echo.POST,
+				Path:    "/topup",
+				Handler: TopUpHandler.CreateTopup,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/users/topup",
+				Handler: TopUpHandler.UserTopup,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{
+				Method:  echo.POST,
+				Path:    "/transaction",
+				Handler: TransactionHandler.CreateTransaction,
+				Roles:   allRoles,
+			},
+		},
 	}
 
 	for _, routes := range routeSlices {

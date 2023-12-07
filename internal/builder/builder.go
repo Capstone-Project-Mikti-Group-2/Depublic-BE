@@ -21,11 +21,12 @@ func BuildPublicRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Clie
 
 	//create payment
 	paymentService := service.NewPaymentService(midtransClient)
+	userService := service.NewUserService(userRepository)
 
 	//Create transaction handler
 	transactionRepository := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepository)
-	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService, userService)
 
 	return router.PublicRoutes(authHandler, transactionHandler)
 }
@@ -57,9 +58,14 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Cli
 	//Create transaction handler
 	transactionRepository := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepository)
-	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService, userService)
+
+	//Create topup handler
+	topupRepository := repository.NewTopupRepository(db)
+	topupService := service.NewTopupService(cfg, topupRepository)
+	topupHandler := handler.NewTopUpHandler(cfg, topupService)
 
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler, ticketHandler)
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler, ticketHandler, topupHandler)
 
 }

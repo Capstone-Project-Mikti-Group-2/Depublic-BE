@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "public"."topup" (
     "snap_url" varchar(255),
     "status" INT NOT NULL,
     "created_at" timestamptz (6) NOT NULL,
-    "updated_at" timestamptz (6) NOT NULL,
+    "updated_at" timestamptz (6) NOT NULL
 );
 
 COMMIT;

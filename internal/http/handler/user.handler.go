@@ -5,10 +5,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -221,5 +223,73 @@ func (h *UserHandler) FindUserByNumber(ctx echo.Context) error {
 			"created_at": user.CreatedAt,
 			"updated_at": user.UpdatedAt,
 		},
+	})
+}
+
+func (h *UserHandler) DeleteAccount(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	idToDelete := claimsData.ID
+
+	err := h.userService.DeleteUser(ctx.Request().Context(), idToDelete)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success delete account",
+	})
+}
+
+func (h *UserHandler) UpdateSelfUser(ctx echo.Context) error {
+	var input struct {
+		ID       int64  `json:"id"`
+		Name     string `json:"name"`
+		Number   string `json:"number"`
+		Email    string `json:"email" validate:"email"`
+		Password string `json:"password"`
+	}
+
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	input.ID = claimsData.ID
+
+	user := entity.UpdateSelfUser(input.ID, input.Name, input.Number, input.Email, input.Password)
+
+	err := h.userService.UpdateSelfUser(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success update user",
 	})
 }

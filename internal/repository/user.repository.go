@@ -110,3 +110,42 @@ func (r *UserRepository) FindUserByNumber(ctx context.Context, number string) (*
 	return user, nil
 
 }
+
+func (r *UserRepository) FindByID(ctx context.Context, id int64) (*entity.User, error) {
+	user := new(entity.User)
+	result := r.db.WithContext(ctx).First(&user, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return user, nil
+}
+
+func (r *UserRepository) UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error {
+	user := &entity.User{
+		ID:    userID,
+		Saldo: updatedSaldo,
+	}
+
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) DeleteAccount(ctx context.Context, email string) error {
+	if err := r.db.WithContext(ctx).Delete(&entity.User{}, email).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) UpdateSelfUser(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
