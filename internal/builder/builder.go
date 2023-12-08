@@ -23,12 +23,17 @@ func BuildPublicRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Clie
 	paymentService := service.NewPaymentService(midtransClient)
 	userService := service.NewUserService(userRepository)
 
+	//create event handler
+	eventRepository := repository.NewEventRepository(db)
+	eventService := service.NewEventService(eventRepository)
+	eventHandler := handler.NewEventHandler(cfg, eventService)
+
 	//Create transaction handler
 	transactionRepository := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepository)
 	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService, userService)
 
-	return router.PublicRoutes(authHandler, transactionHandler)
+	return router.PublicRoutes(authHandler, transactionHandler, eventHandler)
 }
 
 func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Client) []*router.Route {

@@ -24,128 +24,25 @@ type Route struct {
 
 func PublicRoutes(
 	authHandler *handler.AuthHandler,
-	TranscationHandler *handler.TransactionHandler,
-) []*Route {
-	return []*Route{
-		{
-			Method:  echo.POST,
-			Path:    "/login",
-			Handler: authHandler.Login,
-		},
-		{
-			Method:  echo.POST,
-			Path:    "/register",
-			Handler: authHandler.Registration,
-		},
-		{
-			Method:  echo.POST,
-			Path:    "/transaction/webhook",
-			Handler: TranscationHandler.WebHookTransaction,
-		},
-	}
-}
-
-func PrivateRoutes(
-	UserHandler *handler.UserHandler,
-	ProfileHandler *handler.ProfileHandler,
-	EventHandler *handler.EventHandler,
-	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, TopUpHandler *handler.TopUpHandler,
+	TranscationHandler *handler.TransactionHandler, EventHandler *handler.EventHandler,
 ) []*Route {
 	allRoutes := []*Route{}
-
 	routeSlices := [][]*Route{
 		{
-			{ //users Routes
+			{ //Public Register and Login
 				Method:  echo.POST,
-				Path:    "/users",
-				Handler: UserHandler.CreateUser,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.PUT,
-				Path:    "/users/:id",
-				Handler: UserHandler.UpdateUser,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.PUT,
-				Path:    "/users/profile/:id",
-				Handler: UserHandler.UpdateSelfUser,
-				Roles:   allRoles,
+				Path:    "/login",
+				Handler: authHandler.Login,
 			},
 			{
 				Method:  echo.POST,
-				Path:    "/users",
-				Handler: UserHandler.DeleteUser,
-				Roles:   onlyAdmin,
+				Path:    "/register",
+				Handler: authHandler.Registration,
 			},
-			{
+			{ //Public Webhook
 				Method:  echo.POST,
-				Path:    "/users/profile/:id",
-				Handler: UserHandler.DeleteAccount,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.DELETE,
-				Path:    "/users/:id",
-				Handler: UserHandler.DeleteUser,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/users",
-				Handler: UserHandler.FindAllUser,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/users/:id",
-				Handler: UserHandler.FindUserByID,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/users/email/:email",
-				Handler: UserHandler.FindByEmail,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/users/number/:number",
-				Handler: UserHandler.FindUserByNumber,
-				Roles:   onlyAdmin,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/users/name/:name",
-				Handler: UserHandler.FindUserByUsername,
-				Roles:   onlyAdmin,
-			},
-		},
-		{
-			{ //profile Routes
-				Method:  echo.GET,
-				Path:    "/profile/:id",
-				Handler: ProfileHandler.GetProfileByID,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.PUT,
-				Path:    "/profile/:id",
-				Handler: ProfileHandler.UpdateProfile,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.POST,
-				Path:    "/profile",
-				Handler: ProfileHandler.CreateProfile,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.DELETE,
-				Path:    "/profile/:id",
-				Handler: ProfileHandler.DeleteProfile,
-				Roles:   allRoles,
+				Path:    "/transaction/webhook",
+				Handler: TranscationHandler.WebHookTransaction,
 			},
 		},
 		{
@@ -228,6 +125,123 @@ func PrivateRoutes(
 				Roles:   allRoles,
 			},
 		},
+	}
+	for _, routes := range routeSlices {
+		allRoutes = append(allRoutes, routes...)
+	}
+
+	return allRoutes
+}
+
+func PrivateRoutes(
+	UserHandler *handler.UserHandler,
+	ProfileHandler *handler.ProfileHandler,
+	EventHandler *handler.EventHandler,
+	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, TopUpHandler *handler.TopUpHandler,
+) []*Route {
+	allRoutes := []*Route{}
+
+	routeSlices := [][]*Route{
+		{
+			{ //users Routes
+				Method:  echo.POST,
+				Path:    "/users",
+				Handler: UserHandler.CreateUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/users/:id",
+				Handler: UserHandler.UpdateUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/users/profile",
+				Handler: UserHandler.UpdateSelfUser,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users",
+				Handler: UserHandler.DeleteUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users/profile/:id",
+				Handler: UserHandler.DeleteAccount,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users/:id",
+				Handler: UserHandler.DeleteUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users",
+				Handler: UserHandler.FindAllUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/:id",
+				Handler: UserHandler.FindUserByID,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/email/:email",
+				Handler: UserHandler.FindByEmail,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/number/:number",
+				Handler: UserHandler.FindUserByNumber,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/name/:name",
+				Handler: UserHandler.FindUserByUsername,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/users/logout",
+				Handler: UserHandler.Logout,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{ //profile Routes
+				Method:  echo.GET,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.GetProfileByID,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.UpdateProfile,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/profile",
+				Handler: ProfileHandler.CreateProfile,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/profile/:id",
+				Handler: ProfileHandler.DeleteProfile,
+				Roles:   allRoles,
+			},
+		},
 		{
 			{
 				Method:  echo.POST,
@@ -265,6 +279,12 @@ func PrivateRoutes(
 				Method:  echo.POST,
 				Path:    "/users/topup",
 				Handler: TopUpHandler.UserTopup,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/users/input-saldo",
+				Handler: UserHandler.InputSaldo,
 				Roles:   allRoles,
 			},
 		},

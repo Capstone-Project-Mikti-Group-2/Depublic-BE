@@ -257,7 +257,7 @@ func (h *UserHandler) DeleteAccount(ctx echo.Context) error {
 
 func (h *UserHandler) UpdateSelfUser(ctx echo.Context) error {
 	var input struct {
-		ID       int64  `json:"id"`
+		ID       int64
 		Name     string `json:"name"`
 		Number   string `json:"number"`
 		Email    string `json:"email" validate:"email"`
