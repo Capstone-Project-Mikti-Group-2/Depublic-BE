@@ -70,7 +70,12 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Cli
 	topupService := service.NewTopupService(cfg, topupRepository)
 	topupHandler := handler.NewTopUpHandler(cfg, topupService)
 
+	//create notification handler
+	notificationRepository := repository.NewNotificationRepository(db)
+	notificationService := service.NewNotificationService(notificationRepository)
+	notificationHandler := handler.NewNotificationHandler(notificationService)
+
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler, ticketHandler, topupHandler)
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler, ticketHandler, topupHandler, notificationHandler)
 
 }

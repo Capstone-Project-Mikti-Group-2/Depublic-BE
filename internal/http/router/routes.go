@@ -137,7 +137,7 @@ func PrivateRoutes(
 	UserHandler *handler.UserHandler,
 	ProfileHandler *handler.ProfileHandler,
 	EventHandler *handler.EventHandler,
-	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, TopUpHandler *handler.TopUpHandler,
+	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, TopUpHandler *handler.TopUpHandler, NotificationHandler *handler.NotificationHandler,
 ) []*Route {
 	allRoutes := []*Route{}
 
@@ -293,6 +293,26 @@ func PrivateRoutes(
 				Method:  echo.POST,
 				Path:    "/transaction",
 				Handler: TransactionHandler.CreateTransaction,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{
+				Method:  echo.POST,
+				Path:    "/notification",
+				Handler: NotificationHandler.CreateNotification,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/notifications",
+				Handler: NotificationHandler.GetAllNotification,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/notifications",
+				Handler: NotificationHandler.UserGetNotification,
 				Roles:   allRoles,
 			},
 		},
