@@ -39,7 +39,7 @@ func PublicRoutes(
 		},
 		{
 			Method:  echo.POST,
-			Path:    "/transaction/webhook",
+			Path:    "/transactions/webhook",
 			Handler: transcationHandler.WebHookTransaction,
 		},
 	}
@@ -235,7 +235,7 @@ func PrivateRoutes(
 		{
 			{//transaction Routes
 				Method:  echo.POST,
-				Path:    "/transaction",
+				Path:    "/transactions",
 				Handler: TransactionHandler.CreateTransaction,
 				Roles:   allRoles,
 			},

@@ -84,7 +84,7 @@ func (h *TransactionHandler) WebHookTransaction(ctx echo.Context) error {
 }
 
 func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
-	idStr := ctx.Param("id")
+	idStr := ctx.Param("user_id")
 	id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -105,8 +105,8 @@ func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
 			"order_id":   user.OrderID,
 			"amount":     user.Amount,
 			"status":     user.Status,
-			"created_at": user.CreatedAt,
-			"updated_at": user.UpdatedAt,
+			// "created_at": user.CreatedAt,
+			// "updated_at": user.UpdatedAt,
 		})
 	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
