@@ -21,9 +21,10 @@ func NewTicketHandler(cfg *config.Config, ticketService service.TicketUseCase) *
 
 func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 	var input struct {
-		EventID  int64 `json:"event_id" validate:"required"`
-		UserID   int64 `json:"user_id" validate:"required"`
-		Quantity int64 `json:"quantity" validate:"required"`
+		EventID      int64 `json:"event_id" validate:"required"`
+		UserID       int64 `json:"user_id" validate:"required"`
+		Quantity     int64 `json:"quantity" validate:"required"`
+		TranactionID int64 `json:"transaction_id" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -44,7 +45,7 @@ func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 		return ctx.JSON(http.StatusUnprocessableEntity, "insufficient balance")
 	}
 
-	ticket := entity.NewTicket(input.EventID, input.UserID, input.Quantity)
+	ticket := entity.NewTicket(input.EventID, input.UserID, input.Quantity, input.TranactionID)
 	err = h.ticketService.CreateTicket(ctx.Request().Context(), ticket)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)

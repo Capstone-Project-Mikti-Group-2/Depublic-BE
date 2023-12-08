@@ -239,6 +239,12 @@ func PrivateRoutes(
 				Handler: TransactionHandler.CreateTransaction,
 				Roles:   allRoles,
 			},
+			{
+				Method: echo.GET,
+				Path:   "/transactions/history",
+				Handler: TransactionHandler.GetTransactionHistoryByUserID,
+				Roles:   allRoles,
+			},
 		},
 	}
 

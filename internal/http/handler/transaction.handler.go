@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
@@ -28,6 +27,7 @@ func (h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
 	var input struct {
 		OrderID string `json:"order_id" validate:"required"`
 		Amount  int64  `json:"amount" validate:"required"`
+		EventID int64  `json:"event_id" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -37,7 +37,7 @@ func (h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
 	dataUser, _ := ctx.Get("user").(*jwt.Token)
 	claims := dataUser.Claims.(*common.JwtCustomClaims)
 
-	transaction := entity.NewTransaction(input.OrderID, claims.ID, input.Amount, "unpaid")
+	transaction := entity.NewTransaction(input.OrderID, claims.ID, input.Amount, input.EventID, "unpaid")
 
 	err := h.transactionService.Create(ctx.Request().Context(), transaction)
 
@@ -83,16 +83,11 @@ func (h *TransactionHandler) WebHookTransaction(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, map[string]string{"message": "success"})
 }
 
-func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
-	idStr := ctx.Param("user_id")
-	id, err := strconv.ParseInt(idStr, 10, 64)
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
-			"error": "invalid id",
-		})
-	}
+func (h *TransactionHandler) GetTransactionHistoryByUserID(ctx echo.Context) error {
+	dataUser, _ := ctx.Get("user").(*jwt.Token)
+	claims := dataUser.Claims.(*common.JwtCustomClaims)
 
-	users, err := h.transactionService.FindByUserID(ctx.Request().Context(), id)
+	users, err := h.transactionService.FindByUserID(ctx.Request().Context(), claims.ID)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
@@ -105,8 +100,8 @@ func (h *TransactionHandler) GetTransactionByUserID(ctx echo.Context) error {
 			"order_id":   user.OrderID,
 			"amount":     user.Amount,
 			"status":     user.Status,
-			// "created_at": user.CreatedAt,
-			// "updated_at": user.UpdatedAt,
+			"created_at": user.CreatedAt,
+			"updated_at": user.UpdatedAt,
 		})
 	}
 	return ctx.JSON(http.StatusOK, map[string]interface{}{

@@ -34,3 +34,4 @@
 7. go mod tidy
 8. (ketik dalam terminal) migrate -database postgres://postgres:password@localhost:5432/depublic-db?sslmode=disable -path db/migrations up
 9. go run cmd/server/main.go
+10. menjalankan serveo ssh -R 80:localhost:8080 serveo.net
