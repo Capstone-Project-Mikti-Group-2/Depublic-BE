@@ -150,7 +150,7 @@ func (h *UserHandler) FindUserByID(ctx echo.Context) error {
 
 func (h *UserHandler) FindByEmail(ctx echo.Context) error {
 	var input struct {
-		Email string `json:"email" form:"email" query:"email" validate:"email"`
+		Email string `param:"email" form:"email" query:"email" validate:"email"`
 	}
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
