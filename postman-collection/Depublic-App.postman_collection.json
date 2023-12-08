@@ -1,0 +1,2325 @@
+{
+	"info": {
+		"_postman_id": "1852cad4-0f2c-4fac-9576-c536cb9160c3",
+		"name": "Depublic-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Public Gateway",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Register Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Admin1\",\r\n    \"email\": \"Admin1@gmail.com\",\r\n    \"password\": \"Admin111\",\r\n    \"number\": \"011111111111\",\r\n    \"role\" : \"Administrator\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"user1\",\r\n    \"email\": \"user1@gmail.com\",\r\n    \"password\": \"user111\",\r\n    \"number\": \"011111111111\",\r\n    \"role\" : \"User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"Admin1@gmail.com\",\r\n    \"password\": \"Admin111\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"user1@gmail.com\",\r\n    \"password\":\"user111\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event Public",
+					"item": [
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2021-01-21"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-01-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin Gateway",
+			"item": [
+				{
+					"name": "User Handler",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"someUser\",\r\n    \"email\": \"usersome@email.com\",\r\n    \"password\": \"somepassword\",\r\n    \"number\": \"000000000\",\r\n    \"role\" : \"User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create User",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\" : \"someUser\",\r\n    \"email\": \"usersome@email.com\",\r\n    \"password\": \"somepassword\",\r\n    \"number\": \"000000000\",\r\n    \"role\" : \"User\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/users",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Get All Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get All Users",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/users",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Get User By ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "integer"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Email",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/email/:email",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"email",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "user1@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Username",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/name/:name",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"name",
+										":name"
+									],
+									"variable": [
+										{
+											"key": "name",
+											"value": "user1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "id",
+										"value": "1",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"ubah@gmail.com\",\r\n    \"role\":\"User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event Admin",
+					"item": [
+						{
+							"name": "Create Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sholawat Bersama Habib Alil Maulana\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Kalimasada\",\r\n    \"price\": 10000,\r\n    \"quantity\": 100,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-01\",\r\n    \"end_date\": \"2023-05-05\",\r\n    \"available\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sholawat Bersama\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Brebes\",\r\n    \"price\": 1000,\r\n    \"quantity\": 500,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-05\",\r\n    \"end_date\": \"2023-01-05\",\r\n    \"available\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2021-01-21"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-01-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order Ticket Admin",
+					"item": [
+						{
+							"name": "Create Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"event_id\" : 1,\r\n    \"user_id\" : 1,\r\n    \"quantity\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Ticket By User ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Topup",
+					"item": [
+						{
+							"name": "Midtransaction Topup",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"order_id\": \"topup\",\r\n\t\"amount\": 50000\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/transactions",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get History Transaction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/transactions/history",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Topup Without Midtrans",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"saldo\":10000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users/input-saldo",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"input-saldo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Topup Saldo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"topup123\",\r\n    \"user_id\": 1,\r\n    \"amount\": 10000,\r\n    \"status\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/topup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"topup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User Gateway",
+			"item": [
+				{
+					"name": "User & Profile Handler",
+					"item": [
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \r\n    \"name\": \"John Doe\",\r\n    \"email\": \"Buyer1@gmail.com\",\r\n    \"number\": \"12345678901\",\r\n    \"password\": \"123123123123123123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Profile",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/profile/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/logout",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Account",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event User",
+					"item": [
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2021-01-21"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-01-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order Ticket User",
+					"item": [
+						{
+							"name": "Create Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"event_id\" : 1,\r\n    \"user_id\" : 1,\r\n    \"quantity\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Ticket By User ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Topup",
+					"item": [
+						{
+							"name": "Topup Saldo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"topup123\",\r\n    \"user_id\": 1,\r\n    \"amount\": 10000,\r\n    \"status\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/topup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"topup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Midtransaction Topup",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"order_id\": \"topup\",\r\n\t\"amount\": 50000\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/transactions",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get History Transaction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/transactions/history",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Topup Without Midtrans",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"saldo\":10000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users/input-saldo",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"input-saldo"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
