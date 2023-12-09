@@ -20,12 +20,6 @@ type JwtConfig struct {
 	SecretKey string `env:"SECRET_KEY"`
 }
 
-type MidtransConfig struct {
-	ClientKey    string `env:"CLIENT_KEY"`
-	ServerKey    string `env:"SERVER_KEY"`
-	IsProduction bool   `env:"IS_PRODUCTION"`
-}
-
 // konfigurasi database
 type PostgresConfig struct {
 	Host     string `env:"HOST" envDefault:"localhost"`
