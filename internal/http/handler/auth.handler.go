@@ -44,6 +44,7 @@ func (h *AuthHandler) Login(ctx echo.Context) error {
 	}
 	data := map[string]interface{}{
 		"token": accessToken,
+		"user":  user,
 	}
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)

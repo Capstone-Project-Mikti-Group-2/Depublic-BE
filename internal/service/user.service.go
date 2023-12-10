@@ -17,6 +17,12 @@ type UserUseCase interface {
 	FindByEmail(ctx context.Context, email string) (*entity.User, error)
 	FindUserByNumber(ctx context.Context, number string) (*entity.User, error)
 	FindUserByUsername(ctx context.Context, username string) (*entity.User, error)
+	FindByID(ctx context.Context, id int64) (*entity.User, error)
+	UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error
+	DeleteAccount(ctx context.Context, email string) error
+	UpdateSelfUser(ctx context.Context, user *entity.User) error
+	InputSaldo(ctx context.Context, user *entity.User) error
+	Logout(ctx context.Context, user *entity.User) error
 }
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *entity.User) error
@@ -27,6 +33,12 @@ type UserRepository interface {
 	FindByEmail(ctx context.Context, email string) (*entity.User, error)
 	FindUserByNumber(ctx context.Context, number string) (*entity.User, error)
 	FindUserByUsername(ctx context.Context, username string) (*entity.User, error)
+	FindByID(ctx context.Context, id int64) (*entity.User, error)
+	UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error
+	DeleteAccount(ctx context.Context, email string) error
+	UpdateSelfUser(ctx context.Context, user *entity.User) error
+	InputSaldo(ctx context.Context, user *entity.User) error
+	Logout(ctx context.Context, user *entity.User) error
 }
 
 type UserService struct {
@@ -86,4 +98,51 @@ func (s *UserService) FindUserByNumber(ctx context.Context, number string) (*ent
 
 func (s *UserService) FindUserByUsername(ctx context.Context, username string) (*entity.User, error) {
 	return s.repository.FindUserByUsername(ctx, username)
+}
+
+func (s *UserService) FindByID(ctx context.Context, id int64) (*entity.User, error) {
+	return s.repository.FindByID(ctx, id)
+}
+
+func (s *UserService) UpdateSaldo(ctx context.Context, userID int64, amount int64) error {
+	user, err := s.repository.FindByID(ctx, userID)
+	if err != nil {
+		return err
+	}
+
+	updatedSaldo := user.Saldo + amount
+
+	updatedUser := &entity.User{
+		ID:    userID,
+		Saldo: updatedSaldo,
+	}
+
+	if err := s.repository.UpdateUser(ctx, updatedUser); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *UserService) DeleteAccount(ctx context.Context, email string) error {
+	return s.repository.DeleteAccount(ctx, email)
+}
+
+func (s *UserService) UpdateSelfUser(ctx context.Context, user *entity.User) error {
+	if user.Password != "" {
+		hasedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hasedPassword)
+	}
+	return s.repository.UpdateSelfUser(ctx, user)
+}
+
+func (s *UserService) InputSaldo(ctx context.Context, user *entity.User) error {
+	return s.repository.InputSaldo(ctx, user)
+}
+
+func (s *UserService) Logout(ctx context.Context, user *entity.User) error {
+	return s.repository.Logout(ctx, user)
 }

@@ -24,33 +24,92 @@ type Route struct {
 
 func PublicRoutes(
 	authHandler *handler.AuthHandler,
-	transcationHandler *handler.TransactionHandler,
+	TranscationHandler *handler.TransactionHandler, EventHandler *handler.EventHandler,
 ) []*Route {
-	return []*Route{
+	allRoutes := []*Route{}
+	routeSlices := [][]*Route{
 		{
-			Method:  echo.POST,
-			Path:    "/login",
-			Handler: authHandler.Login,
+			{ //Public Register and Login
+				Method:  echo.POST,
+				Path:    "/login",
+				Handler: authHandler.Login,
+			},
+			{
+				Method:  echo.POST,
+				Path:    "/register",
+				Handler: authHandler.Registration,
+			},
+			{ //Public Webhook
+				Method:  echo.POST,
+				Path:    "/transaction/webhook",
+				Handler: TranscationHandler.WebHookTransaction,
+			},
 		},
 		{
-			Method:  echo.POST,
-			Path:    "/register",
-			Handler: authHandler.Registration,
-		},
-		{
-			Method:  echo.POST,
-			Path:    "/transactions/webhook",
-			Handler: transcationHandler.WebHookTransaction,
+			{
+				Method:  echo.GET,
+				Path:    "/events",
+				Handler: EventHandler.FindAllEvent,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/:id",
+				Handler: EventHandler.FindEventByID,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/keyword/:keyword",
+				Handler: EventHandler.SearchEvent,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/price/:min/:max",
+				Handler: EventHandler.FilterEventByPrice,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/location/:location",
+				Handler: EventHandler.FilterEventByLocation,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/available/:available",
+				Handler: EventHandler.FilterEventByAvailable,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/date/:start_date/:end_date",
+				Handler: EventHandler.FilterEventByDate,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/cheapest",
+				Handler: EventHandler.SortEventByCheapest,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/expensive",
+				Handler: EventHandler.SortEventByExpensive,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/events/newest",
+				Handler: EventHandler.SortEventByNewest,
+			},
 		},
 	}
+	for _, routes := range routeSlices {
+		allRoutes = append(allRoutes, routes...)
+	}
+
+	return allRoutes
 }
 
 func PrivateRoutes(
 	UserHandler *handler.UserHandler,
 	ProfileHandler *handler.ProfileHandler,
 	EventHandler *handler.EventHandler,
-	TicketHandler *handler.TicketHandler,
-	TransactionHandler *handler.TransactionHandler,
+	TransactionHandler *handler.TransactionHandler, TicketHandler *handler.TicketHandler, NotificationHandler *handler.NotificationHandler,
 ) []*Route {
 	allRoutes := []*Route{}
 
@@ -66,6 +125,24 @@ func PrivateRoutes(
 				Method:  echo.PUT,
 				Path:    "/users/:id",
 				Handler: UserHandler.UpdateUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.PUT,
+				Path:    "/users/profile",
+				Handler: UserHandler.UpdateSelfUser,
+				Roles:   allRoles,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users",
+				Handler: UserHandler.DeleteUser,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.DELETE,
+				Path:    "/users/profile",
+				Handler: UserHandler.DeleteAccount,
 				Roles:   allRoles,
 			},
 			{
@@ -104,6 +181,12 @@ func PrivateRoutes(
 				Handler: UserHandler.FindUserByUsername,
 				Roles:   onlyAdmin,
 			},
+			{
+				Method:  echo.POST,
+				Path:    "/users/logout",
+				Handler: UserHandler.Logout,
+				Roles:   allRoles,
+			},
 		},
 		{
 			{ //profile Routes
@@ -114,7 +197,7 @@ func PrivateRoutes(
 			},
 			{
 				Method:  echo.PUT,
-				Path:    "/profile/:id",
+				Path:    "/profile",
 				Handler: ProfileHandler.UpdateProfile,
 				Roles:   allRoles,
 			},
@@ -150,69 +233,22 @@ func PrivateRoutes(
 				Handler: EventHandler.DeleteEvent,
 				Roles:   onlyAdmin,
 			},
-			{
-				Method:  echo.GET,
-				Path:    "/events",
-				Handler: EventHandler.FindAllEvent,
+		},
+		{
+			{ //transaction Routes
+				Method:  echo.POST,
+				Path:    "/transactions",
+				Handler: TransactionHandler.CreateTransaction,
 				Roles:   allRoles,
 			},
 			{
 				Method:  echo.GET,
-				Path:    "/events/:id",
-				Handler: EventHandler.FindEventByID,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/keyword/:keyword",
-				Handler: EventHandler.SearchEvent,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/price/:min/:max",
-				Handler: EventHandler.FilterEventByPrice,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/location/:location",
-				Handler: EventHandler.FilterEventByLocation,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/available/:available",
-				Handler: EventHandler.FilterEventByAvailable,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/date/:start_date/:end_date",
-				Handler: EventHandler.FilterEventByDate,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/cheapest",
-				Handler: EventHandler.SortEventByCheapest,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/expensive",
-				Handler: EventHandler.SortEventByExpensive,
-				Roles:   allRoles,
-			},
-			{
-				Method:  echo.GET,
-				Path:    "/events/newest",
-				Handler: EventHandler.SortEventByNewest,
+				Path:    "/transactions/history",
+				Handler: TransactionHandler.GetTransactionHistoryByUserID,
 				Roles:   allRoles,
 			},
 		},
 		{
-	
 			{ //ticket Routes
 				Method:  echo.POST,
 				Path:    "/tickets",
@@ -233,16 +269,31 @@ func PrivateRoutes(
 			},
 		},
 		{
-			{//transaction Routes
+			//topup Routes
+			{
 				Method:  echo.POST,
-				Path:    "/transactions",
-				Handler: TransactionHandler.CreateTransaction,
+				Path:    "/users/input-saldo",
+				Handler: UserHandler.InputSaldo,
+				Roles:   allRoles,
+			},
+		},
+		{
+			{
+				Method:  echo.POST,
+				Path:    "/notification",
+				Handler: NotificationHandler.CreateNotification,
 				Roles:   allRoles,
 			},
 			{
-				Method: echo.GET,
-				Path:   "/transactions/history",
-				Handler: TransactionHandler.GetTransactionHistoryByUserID,
+				Method:  echo.GET,
+				Path:    "/notifications",
+				Handler: NotificationHandler.GetAllNotification,
+				Roles:   onlyAdmin,
+			},
+			{
+				Method:  echo.GET,
+				Path:    "/users/notifications",
+				Handler: NotificationHandler.UserGetNotification,
 				Roles:   allRoles,
 			},
 		},

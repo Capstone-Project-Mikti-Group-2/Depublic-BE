@@ -5,10 +5,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -46,6 +48,7 @@ func (h *UserHandler) CreateUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message":    "user created successfully",
 		"created_at": user.CreatedAt,
+		"user":       user,
 	})
 }
 
@@ -73,6 +76,7 @@ func (h *UserHandler) UpdateUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message":    "success update user",
 		"updated_at": user.UpdatedAt,
+		"user":       user,
 	})
 }
 
@@ -148,7 +152,7 @@ func (h *UserHandler) FindUserByID(ctx echo.Context) error {
 
 func (h *UserHandler) FindByEmail(ctx echo.Context) error {
 	var input struct {
-		Email string `json:"email" form:"email" query:"email" validate:"email"`
+		Email string `param:"email" form:"email" query:"email" validate:"email"`
 	}
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -221,5 +225,157 @@ func (h *UserHandler) FindUserByNumber(ctx echo.Context) error {
 			"created_at": user.CreatedAt,
 			"updated_at": user.UpdatedAt,
 		},
+	})
+}
+
+func (h *UserHandler) DeleteAccount(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	idToDelete := claimsData.ID
+
+	err := h.userService.DeleteUser(ctx.Request().Context(), idToDelete)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success delete account",
+		"id":      idToDelete,
+	})
+}
+
+func (h *UserHandler) UpdateSelfUser(ctx echo.Context) error {
+	var input struct {
+		Name     string `json:"name"`
+		Number   string `json:"number"`
+		Email    string `json:"email" validate:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	user := entity.UpdateSelfUser(claimsData.ID, input.Name, input.Email, input.Number, input.Password)
+
+	err := h.userService.UpdateSelfUser(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success update user",
+		"data":    user,
+	})
+}
+
+func (h *UserHandler) Logout(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	user := &entity.User{
+		ID: userID,
+	}
+
+	err := h.userService.Logout(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": "unable to logout",
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success logout",
+	})
+}
+
+func (h *UserHandler) InputSaldo(ctx echo.Context) error {
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	user, err := h.userService.FindByID(ctx.Request().Context(), userID)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	var input struct {
+		Saldo int64 `json:"saldo"`
+	}
+
+	if err := ctx.Bind(&input); err != nil {
+		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	}
+
+	updateSaldo := user.Saldo + input.Saldo
+
+	user.Saldo = updateSaldo
+	err = h.userService.InputSaldo(ctx.Request().Context(), user)
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success input saldo",
+		"data":    user,
 	})
 }

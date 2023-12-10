@@ -64,7 +64,7 @@ func (r *TicketRepository) FindTicketByID(ctx context.Context, id int64) (*entit
 
 func (r *TicketRepository) GetBooking(ctx context.Context) ([]*entity.Ticket, error) {
 	booking := make([]*entity.Ticket, 0)
-	err := r.db.WithContext(ctx).Preload("Event").Preload("User").Find(&booking).Error
+	err := r.db.WithContext(ctx).Preload("Event").Find(&booking).Error
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (r *TicketRepository) GetBooking(ctx context.Context) ([]*entity.Ticket, er
 
 func (r *TicketRepository) GetBookingByID(ctx context.Context, UserID int64) ([]*entity.Ticket, error) {
 	booking := make([]*entity.Ticket, 0)
-	err := r.db.WithContext(ctx).Where("user_id = ?", UserID).Preload("Event").Preload("User").Find(&booking).Error
+	err := r.db.WithContext(ctx).Where("user_id = ?", UserID).Preload("Event").Find(&booking).Error
 	if err != nil {
 		return nil, err
 	}

@@ -8,26 +8,27 @@ import (
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
 type TransactionHandler struct {
 	transactionService service.TransactionUseCase
 	paymentService     service.PaymentUseCase
+	userService        service.UserUseCase
 }
 
-func NewTransactionHandler(transactionService service.TransactionUseCase, paymentService service.PaymentUseCase) *TransactionHandler {
+func NewTransactionHandler(transactionService service.TransactionUseCase, paymentService service.PaymentUseCase, userService service.UserUseCase) *TransactionHandler {
 	return &TransactionHandler{
 		transactionService: transactionService,
 		paymentService:     paymentService,
+		userService:        userService,
 	}
 }
 
 func (h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
 	var input struct {
-		OrderID string `json:"order_id" validate:"required"`
-		Amount  int64  `json:"amount" validate:"required"`
-		EventID int64  `json:"event_id" validate:"required"`
+		Amount int64 `json:"amount" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
@@ -37,9 +38,18 @@ func (h *TransactionHandler) CreateTransaction(ctx echo.Context) error {
 	dataUser, _ := ctx.Get("user").(*jwt.Token)
 	claims := dataUser.Claims.(*common.JwtCustomClaims)
 
-	transaction := entity.NewTransaction(input.OrderID, claims.ID, input.Amount, input.EventID, "unpaid")
+	uniqueID := uuid.New().String()
+	OrderID := "topup-" + uniqueID
+
+	transaction := entity.NewTransaction(OrderID, claims.ID, input.Amount, "unpaid")
 
 	err := h.transactionService.Create(ctx.Request().Context(), transaction)
+
+	if err != nil {
+		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
+	}
+
+	err = h.userService.UpdateSaldo(ctx.Request().Context(), claims.ID, input.Amount)
 
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())

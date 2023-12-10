@@ -5,10 +5,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -25,7 +27,6 @@ func NewProfileHandler(
 
 func (h *ProfileHandler) CreateProfile(ctx echo.Context) error {
 	var input struct {
-		UserID  int64  `json:"user_id" validate:"required"`
 		Address string `json:"address" validate:"required"`
 		Avatar  []byte `json:"avatar"`
 	}
@@ -34,7 +35,23 @@ func (h *ProfileHandler) CreateProfile(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	profile := entity.NewProfile(input.UserID, input.Address, input.Avatar)
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	profile := entity.NewProfile(userID, input.Address, input.Avatar)
 	err := h.profileService.CreateProfile(ctx.Request().Context(), profile)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -43,13 +60,13 @@ func (h *ProfileHandler) CreateProfile(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message":    "profile created successfully",
 		"created_at": profile.CreatedAt,
+		"data":       profile,
 	})
 
 }
 
 func (h *ProfileHandler) UpdateProfile(ctx echo.Context) error {
 	var input struct {
-		ID      int64  `json:"id"`
 		Address string `json:"address"`
 		Avatar  []byte `json:"avatar"`
 	}
@@ -58,7 +75,23 @@ func (h *ProfileHandler) UpdateProfile(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	profile := entity.UpdateProfile(input.ID, input.Address, input.Avatar)
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
+	}
+
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
+	}
+
+	userID := claimsData.ID
+
+	profile := entity.UpdateProfile(userID, input.Address, input.Avatar)
 	err := h.profileService.UpdateProfile(ctx.Request().Context(), profile)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -98,22 +131,30 @@ func (h *ProfileHandler) GetProfileByID(ctx echo.Context) error {
 }
 
 func (h *ProfileHandler) DeleteProfile(ctx echo.Context) error {
-	var input struct {
-		ID int64 `json:"id" validate:"required"`
+	claims, ok := ctx.Get("user").(*jwt.Token)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user claims",
+		})
 	}
 
-	if err := ctx.Bind(&input); err != nil {
-		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
+	claimsData, ok := claims.Claims.(*common.JwtCustomClaims)
+	if !ok {
+		return ctx.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"message": "unable to get user informations",
+		})
 	}
 
-	err := h.profileService.DeleteProfile(ctx.Request().Context(), input.ID)
+	userID := claimsData.ID
+
+	err := h.profileService.DeleteProfile(ctx.Request().Context(), userID)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success delete profile",
-		"id":      input.ID,
+		"id":      userID,
 		"deleted": time.Now(),
 	})
 }

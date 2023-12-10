@@ -22,12 +22,17 @@ func BuildPublicRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Clie
 	//create payment
 	paymentService := service.NewPaymentService(midtransClient)
 
+	//create evnt handler
+	eventRepository := repository.NewEventRepository(db)
+	eventService := service.NewEventService(eventRepository)
+	eventHandler := handler.NewEventHandler(cfg, eventService)
+
 	//Create transaction handler
 	transactionRepository := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepository)
-	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService, userRepository)
 
-	return router.PublicRoutes(authHandler, transactionHandler)
+	return router.PublicRoutes(authHandler, transactionHandler, eventHandler)
 }
 
 func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Client) []*router.Route {
@@ -52,14 +57,19 @@ func BuildPrivateRoutes(cfg *config.Config, db *gorm.DB, midtransClient snap.Cli
 	//Create transaction handler
 	transactionRepository := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepository)
-	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService, userService)
 
 	//create ticket handler
 	ticketRepository := repository.NewTicketRepository(db)
 	ticketService := service.NewTicketService(ticketRepository)
 	ticketHandler := handler.NewTicketHandler(cfg, ticketService)
 
+	//Create notification handler
+	notificationRepository := repository.NewNotificationRepository(db)
+	notificationService := service.NewNotificationService(notificationRepository)
+	notificationHandler := handler.NewNotificationHandler(notificationService)
+
 	//Combine all routes
-	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, ticketHandler, transactionHandler)
+	return router.PrivateRoutes(userHandler, profileHandler, eventHandler, transactionHandler, ticketHandler, notificationHandler)
 
 }

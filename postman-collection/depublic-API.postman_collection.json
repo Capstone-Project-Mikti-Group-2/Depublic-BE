@@ -1,1058 +1,2549 @@
 {
 	"info": {
-		"_postman_id": "2eb17f73-f02c-48c8-9d93-6e70c921f419",
-		"name": "depublic-API",
+		"_postman_id": "1852cad4-0f2c-4fac-9576-c536cb9160c3",
+		"name": "Depublic-App",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Auth Handler",
+			"name": "Public Gateway",
 			"item": [
 				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"\", //name (string)\r\n    \"email\": \"\", //email (must email example@mail.com\"\r\n    \"password\": \"\", //password\r\n    \"number\": \"\", //number\r\n    \"role\" : \"\" //role (role must be Administrator or User\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Register Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Admin1\",\r\n    \"email\": \"Admin1@gmail.com\",\r\n    \"password\": \"Admin111\",\r\n    \"number\": \"011111111111\",\r\n    \"role\" : \"Administrator\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/register",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"register"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user1@gmail.com\", //email (must email example@mail.com\"\r\n    \"password\": \"User1234\" //password\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User Handler",
-			"item": [
-				{
-					"name": "Get All Users",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIiLCJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiZXhwIjoxNzAxMTgyOTMzfQ.1ikfoAgpoj6y0DrAfo5pArm2U9jsruzFvopglxLZ1Fw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User By ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIiLCJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiZXhwIjoxNzAxMTgyOTMzfQ.1ikfoAgpoj6y0DrAfo5pArm2U9jsruzFvopglxLZ1Fw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1",
-									"description": "integer"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create User",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"\", //name (string)\r\n    \"email\": \"\", //email (must email example@mail.com\"\r\n    \"password\": \"\", //password\r\n    \"number\": \"\", //number\r\n    \"role\" : \"\" //role (role must be Administrator or User\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/users",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User By Email",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE2MDczOH0.YwZNXgG0myABJ4IwrP77DWQH_Y1NyK5jXZjm8nZGD6M",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users/email/:email",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"email",
-								":email"
-							],
-							"variable": [
-								{
-									"key": "email",
-									"value": "user1@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User By Username",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJleHAiOjE3MDExMDQ2ODl9.NPh5ncKES-jGrcUQkewRzcuAOwuVZVl5_tzRud8sZKk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/users/name/:name",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"name",
-								":name"
-							],
-							"variable": [
-								{
-									"key": "name",
-									"value": "user1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InVzZXIzIiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTExMTI5MX0.a1nNy0bYChXtdAhzhqLzplAIunritoHmBVkzQu8Ij4M",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "default",
-								"disabled": true
 							},
-							{
-								"key": "id",
-								"value": "1",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ubah@gmail.com\",\r\n    \"role\":\"User\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/users/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Profile Handler",
-			"item": [
-				{
-					"name": "Get Profile By ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/profile/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"profile",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Profile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1ODczM30.lsCbg6OWxoLCcbINMapVMstIEnB9AuyzaNRsY_SL4ec",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": 1,\r\n    \"address\":\"Semarang\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/profile",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Profile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTM1OTgzMX0.Wmxy2slG7pDJnN4IDbAY45fxHYi7U2bYZo95pPbnZCw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "id",
-								"value": "1",
-								"type": "default",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"address\":\"Brebes\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/profile/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"profile",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Profile By ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTE1OTM4OH0.yWZaQQh0d_0u0sVue9emrVRNK55PmMcUozP2nCcR2t0",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/profile/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"profile",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Event Handler",
-			"item": [
-				{
-					"name": "Create Event",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Sholawat Bersama Habib Alil Maulana\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Kalimasada\",\r\n    \"price\": 10000,\r\n    \"quantity\": 100,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-01\",\r\n    \"end_date\": \"2023-05-05\",\r\n    \"available\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/events",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Event",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTM2MDcwNn0.UjLHuQAxlhyiNiJlYRgvJrb1f683XQ3-cfSC5gHKuEk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sholawat Bersama\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Brebes\",\r\n    \"price\": 1000,\r\n    \"quantity\": 500,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-05\",\r\n    \"end_date\": \"2023-01-05\",\r\n    \"available\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/events/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Event",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/events/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Event",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2MjU0NH0.sjcj9u7lOL9LVfgtd9NiJFRKIt57qsNE8IqhHswNGE4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/events",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Event By ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/events/:id",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Filter Event By Price",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI2NzE2N30.Oo4yRC4wx6BYtt_sR6DU7yAx61QlHf_ZiCB44Pzm2C4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/events/price/:min/:max",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								"price",
-								":min",
-								":max"
-							],
-							"variable": [
-								{
-									"key": "min",
-									"value": "5000"
+						{
+							"name": "Register User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Rina Agustiani\",\r\n    \"email\": \"rina.agustiani@email.com\",\r\n    \"password\": \"userpassword1\",\r\n    \"number\": \"081234567890\",\r\n    \"role\": \"User\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "max",
-									"value": "500000"
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Filter Event By Date",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI3NjgwMX0.Ahd8Imm1phSNvJvy2xKKm9IHClqICkkpeE1cGKV_8x4",
-									"type": "string"
-								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/events/date/:start_date/:end_date",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								"date",
-								":start_date",
-								":end_date"
-							],
-							"variable": [
-								{
-									"key": "start_date",
-									"value": "2021-01-21"
+						{
+							"name": "Login Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
 								},
-								{
-									"key": "end_date",
-									"value": "2023-01-23"
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"Admin1@gmail.com\",\r\n    \"password\": \"Admin111\",\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"login"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search Event Name",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/events/keyword/:keyword",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								"keyword",
-								":keyword"
-							],
-							"variable": [
-								{
-									"key": "keyword",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Filter Event By Availableity",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Filter Event By Location",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTMyNDc1NX0.PMc997gY5tE8hFQ4Bib3nj3N1tfXUCZENYkYIXuYk-c",
-									"type": "string"
-								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/events/location/:location",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								"location",
-								":location"
-							],
-							"variable": [
-								{
-									"key": "location",
-									"value": "Kalimasada"
+						{
+							"name": "Login User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"dewi.novianti@email.com\",\r\n    \"password\": \"userpassword5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"login"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Sort Event By Expensive",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTI3NjgwMX0.Ahd8Imm1phSNvJvy2xKKm9IHClqICkkpeE1cGKV_8x4",
-									"type": "string"
-								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/expensive/:expensive",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"expensive",
-								":expensive"
-							],
-							"variable": [
-								{
-									"key": "expensive",
-									"value": ""
+						{
+							"name": "Logout",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/logout",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"logout"
+									]
 								}
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Sort Event By Cheapest",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events"
-							]
+					"name": "Event Public",
+					"item": [
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2020-01-01"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Sort Event By Newest",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/events/newest",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"events",
-								"newest"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
 		{
-			"name": "Ticket Handler",
+			"name": "Admin Gateway",
 			"item": [
 				{
-					"name": "Create Ticket",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "User Handler",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"johndoe@email.com\",\r\n    \"password\": \"securepassword\",\r\n    \"number\": \"081234567890\",\r\n    \"role\": \"User\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTU5MjQwNH0.sGqTbRE5JBA1rxzrEb42gxT5Nrn6mV243oPJBDLtm8o",
-									"type": "string"
+									"name": "Create User",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\" : \"someUser\",\r\n    \"email\": \"usersome@email.com\",\r\n    \"password\": \"somepassword\",\r\n    \"number\": \"000000000\",\r\n    \"role\" : \"User\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/users",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
 								}
 							]
 						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"event_id\" : 1,\r\n    \"user_id\" : 1,\r\n    \"quantity\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Get All Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:8080/api/v1/tickets",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"tickets"
-							]
+						{
+							"name": "Get User By ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "integer"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Email",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/email/:email",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"email",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "user1@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Username",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/name/:name",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"name",
+										":name"
+									],
+									"variable": [
+										{
+											"key": "name",
+											"value": "user1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Number",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "id",
+										"value": "1",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"ubah@gmail.com\",\r\n    \"role\":\"User\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get All Tickets",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTcwMTU5MjQwNH0.sGqTbRE5JBA1rxzrEb42gxT5Nrn6mV243oPJBDLtm8o",
-									"type": "string"
+					"name": "Profile Admin",
+					"item": [
+						{
+							"name": "Create Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"address\": \"Jl. Sudirman No. 123, Jakarta Selatan\",\r\n\t\"avatar\": \"c3RyaW5nYXJlZGF2YXRhZGF0YQ==\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile"
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v1/tickets",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"tickets"
-							]
+						{
+							"name": "Update Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"address\": \"Jl. MH Thamrin No. 456, Jakarta Pusat\",\r\n\t\"avatar\": \"c3RyaW5nYXJlZGF2YXRhZGF0YQ==\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Profile User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/profile/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Account",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Profile By ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/profile/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Event Admin",
+					"item": [
+						{
+							"name": "Create Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sholawat Bersama Habib Alil Maulana\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Kalimasada\",\r\n    \"price\": 10000,\r\n    \"quantity\": 100,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-01\",\r\n    \"end_date\": \"2023-05-05\",\r\n    \"available\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sholawat Bersama\",\r\n    \"description\": \"something about description\",\r\n    \"location\": \"Brebes\",\r\n    \"price\": 1000,\r\n    \"quantity\": 500,\r\n    \"image\": null,\r\n    \"start_date\": \"2023-01-05\",\r\n    \"end_date\": \"2023-01-05\",\r\n    \"available\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token-Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2021-01-21"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-01-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order Ticket Admin",
+					"item": [
+						{
+							"name": "Create Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"event_id\" : 1,\r\n    \"user_id\" : 1,\r\n    \"quantity\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Ticket By User ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Topup",
+					"item": [
+						{
+							"name": "Midtransaction Topup",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"order_id\": \"topup\",\r\n\t\"amount\": 50000,\r\n    \"event_id\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/transactions",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get History Transaction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/transactions/history",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Topup Without Midtrans",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"saldo\":10000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users/input-saldo",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"input-saldo"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notification",
+					"item": [
+						{
+							"name": "Create Notification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\":\"warning\",\r\n    \"content\":\"something in content\",\r\n    \"is_read\":false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/notification",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"notification"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Notification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}//users/notifications",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"",
+										"users",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Notification",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User Gateway",
+			"item": [
+				{
+					"name": "User & Profile Handler",
+					"item": [
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \r\n    \"name\": \"John Doe\",\r\n    \"email\": \"Buyer1@gmail.com\",\r\n    \"number\": \"12345678901\",\r\n    \"password\": \"123123123123123123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Profile",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/profile/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/logout",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Account",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event User",
+					"item": [
+						{
+							"name": "Get All Event",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Event Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/keyword/:keyword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"keyword",
+										":keyword"
+									],
+									"variable": [
+										{
+											"key": "keyword",
+											"value": "alil"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Price",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/price/:min/:max",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"price",
+										":min",
+										":max"
+									],
+									"variable": [
+										{
+											"key": "min",
+											"value": "5000"
+										},
+										{
+											"key": "max",
+											"value": "20000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Date",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/events/date/:start_date/:end_date",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"date",
+										":start_date",
+										":end_date"
+									],
+									"variable": [
+										{
+											"key": "start_date",
+											"value": "2021-01-21"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-01-23"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Availableity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/available/:avalilable",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"available",
+										":avalilable"
+									],
+									"variable": [
+										{
+											"key": "avalilable",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Event By Location",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/location/:location",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"location",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Kalimasada"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Expensive",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/expensive?sort=termahal",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"expensive"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termahal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Cheapest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/cheapest?sort=termurah",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"cheapest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "termurah"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sort Event By Newest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/events/newest?sort=terbaru",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"events",
+										"newest"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "terbaru"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order Ticket User",
+					"item": [
+						{
+							"name": "Create Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"event_id\" : 1,\r\n    \"user_id\" : 1,\r\n    \"quantity\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/tickets",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Ticket By User ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/tickets/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"tickets",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Topup",
+					"item": [
+						{
+							"name": "Midtransaction Topup",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"order_id\": \"topup-123\",\r\n\t\"amount\": 50000\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/transactions",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get History Transaction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/transactions/history",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"transactions",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Topup Without Midtrans",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token-Buyer}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/users/input-saldo",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"users",
+										"input-saldo"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notification",
+					"item": [
+						{
+							"name": "Get User Notification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}//users/notifications",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"",
+										"users",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}

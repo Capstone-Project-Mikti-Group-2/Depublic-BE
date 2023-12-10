@@ -58,6 +58,7 @@ func (h *EventHandler) CreateEvent(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data":       event,
 		"message":    "event created successfully",
 		"created_at": event.CreatedAt,
 	})
@@ -98,6 +99,7 @@ func (h *EventHandler) UpdateEvent(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"data":       event,
 		"message":    "event updated successfully",
 		"updated_at": event.UpdatedAt,
 	})

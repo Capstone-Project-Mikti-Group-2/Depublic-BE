@@ -83,7 +83,7 @@ func (r *UserRepository) FindUserByID(ctx context.Context, id int64) (*entity.Us
 // Get User by Email (Find User by Email)
 func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*entity.User, error) {
 	user := new(entity.User)
-	err := r.db.WithContext(ctx).Where("email = ?", email).First(user).Error
+	err := r.db.WithContext(ctx).Where("email ILIKE ?", "%"+email+"%").First(user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -103,10 +103,65 @@ func (r *UserRepository) FindUserByUsername(ctx context.Context, username string
 // Get User by Number (Find User by Number Phone)
 func (r *UserRepository) FindUserByNumber(ctx context.Context, number string) (*entity.User, error) {
 	user := new(entity.User)
-	err := r.db.WithContext(ctx).Where("number ILIKE = ?", "%"+number+"%").Find(user).Error
+	err := r.db.WithContext(ctx).Where("number ILIKE ?", "%"+number+"%").Find(user).Error
 	if err != nil {
 		return nil, err
 	}
 	return user, nil
 
+}
+
+func (r *UserRepository) FindByID(ctx context.Context, id int64) (*entity.User, error) {
+	user := new(entity.User)
+	result := r.db.WithContext(ctx).First(&user, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return user, nil
+}
+
+func (r *UserRepository) UpdateSaldo(ctx context.Context, userID int64, updatedSaldo int64) error {
+	user := &entity.User{
+		ID:    userID,
+		Saldo: updatedSaldo,
+	}
+
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) DeleteAccount(ctx context.Context, email string) error {
+	if err := r.db.WithContext(ctx).Delete(&entity.User{}, email).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) UpdateSelfUser(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) Logout(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) InputSaldo(ctx context.Context, user *entity.User) error {
+	if err := r.db.WithContext(ctx).Model(&entity.User{}).Where("id = ?", user.ID).Updates(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

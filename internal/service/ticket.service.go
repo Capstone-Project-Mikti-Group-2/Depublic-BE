@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"strconv"
 
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 )
@@ -52,6 +53,8 @@ func (s *TicketService) CreateTicket(ctx context.Context, ticket *entity.Ticket)
 	}
 
 	ticket.Total = event.Price * int64(ticket.Quantity)
+	ticket.IsPaid = true
+	ticket.BookBy = strconv.FormatInt(ticket.UserID, 10)
 
 	if err := s.repository.CreateTicket(ctx, ticket); err != nil {
 		return err

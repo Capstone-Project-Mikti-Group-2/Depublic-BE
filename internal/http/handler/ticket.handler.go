@@ -3,10 +3,12 @@ package handler
 import (
 	"net/http"
 
+	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/common"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/entity"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/config"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/http/validator"
 	"github.com/Capstone-Project-Mikti-Group-2/Depublic-BE/internal/service"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -21,17 +23,19 @@ func NewTicketHandler(cfg *config.Config, ticketService service.TicketUseCase) *
 
 func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 	var input struct {
-		EventID      int64 `json:"event_id" validate:"required"`
-		UserID       int64 `json:"user_id" validate:"required"`
-		Quantity     int64 `json:"quantity" validate:"required"`
-		TranactionID int64 `json:"transaction_id" validate:"required"`
+		EventID  int64 `json:"event_id" validate:"required"`
+		Quantity int64 `json:"quantity" validate:"required"`
 	}
 
 	if err := ctx.Bind(&input); err != nil {
 		return ctx.JSON(http.StatusBadRequest, validator.ValidatorErrors(err))
 	}
 
-	userSaldo, err := h.ticketService.GetUserSaldo(ctx.Request().Context(), input.UserID)
+	dataUser, _ := ctx.Get("user").(*jwt.Token)
+	claims := dataUser.Claims.(*common.JwtCustomClaims)
+	userID := claims.ID
+
+	userSaldo, err := h.ticketService.GetUserSaldo(ctx.Request().Context(), userID)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
@@ -45,13 +49,13 @@ func (h *TicketHandler) CreateTicket(ctx echo.Context) error {
 		return ctx.JSON(http.StatusUnprocessableEntity, "insufficient balance")
 	}
 
-	ticket := entity.NewTicket(input.EventID, input.UserID, input.Quantity, input.TranactionID)
+	ticket := entity.NewTicket(input.EventID, userID, input.Quantity)
 	err = h.ticketService.CreateTicket(ctx.Request().Context(), ticket)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
 
-	err = h.ticketService.UpdateUserSaldo(ctx.Request().Context(), input.UserID, input.Quantity*eventPrice)
+	err = h.ticketService.UpdateUserSaldo(ctx.Request().Context(), userID, input.Quantity*eventPrice)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
@@ -88,7 +92,11 @@ func (h *TicketHandler) GetAllticket(ctx echo.Context) error {
 }
 
 func (h *TicketHandler) GetTicketByUserID(ctx echo.Context) error {
-	bookings, err := h.ticketService.GetBooking(ctx.Request().Context())
+	dataUser, _ := ctx.Get("user").(*jwt.Token)
+	claims := dataUser.Claims.(*common.JwtCustomClaims)
+	userID := claims.ID
+
+	bookings, err := h.ticketService.GetBookingByID(ctx.Request().Context(), userID)
 	if err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, err)
 	}
