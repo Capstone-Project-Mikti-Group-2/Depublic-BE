@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    # nama container
+    container_name: depublic-be
+
+    # build image menggunakan dockerfile
+    build:
+      context: .
+
+    # Port forwading untuk menghubungkan port host ke port container
+    ports:
+      - "8080:8080"
+    
+    # command dijalankan ketika container dijalankan
+    command: ["./main"]
