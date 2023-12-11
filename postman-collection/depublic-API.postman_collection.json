@@ -1793,7 +1793,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL}}/notification",
+									"raw": "{{URL}}/notifications",
 									"host": [
 										"{{URL}}"
 									],
