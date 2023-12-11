@@ -1852,6 +1852,42 @@
 					"name": "User & Profile Handler",
 					"item": [
 						{
+							"name": "Create Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"address\": \"Jl. Sudirman No. 123, Jakarta Selatan\",\r\n\t\"avatar\": \"c3RyaW5nYXJlZGF2YXRhZGF0YQ==\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/profile",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update User",
 							"request": {
 								"auth": {
