@@ -280,7 +280,7 @@ func PrivateRoutes(
 		{
 			{
 				Method:  echo.POST,
-				Path:    "/notification",
+				Path:    "/notifications",
 				Handler: NotificationHandler.CreateNotification,
 				Roles:   allRoles,
 			},
